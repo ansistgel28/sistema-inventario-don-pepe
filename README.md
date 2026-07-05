@@ -76,8 +76,8 @@ http://127.0.0.1:8020/interfaz_web/index.html
 El sistema genera:
 
 - Inventario disponible.
-- Kardex FIFO.
-- Kardex LIFO.
+- Movimientos FIFO.
+- Movimientos LIFO.
 - Comparación FIFO vs LIFO.
 - Historial de movimientos.
 - Exportación CSV en la carpeta `reportes/`.
