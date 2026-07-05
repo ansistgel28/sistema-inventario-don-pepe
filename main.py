@@ -10,8 +10,17 @@ Descripción:
     comparación de resultados, historial y exportación CSV.
 
 Estructuras usadas:
+    - Listas: almacenan productos, entradas, salidas, historial y kardex.
+    - Diccionarios: permiten acceder a los datos por clave y agrupar lotes.
+    - Búsqueda lineal: se usa para ubicar productos por código.
+    - Ordenamiento: se usa para procesar movimientos por fecha e ID.
     - FIFO: Cola de lotes. Se consume el primer lote ingresado.
     - LIFO: Pila de lotes. Se consume el último lote ingresado.
+
+Relación con el sílabo:
+    - Semana 6: Pilas y colas.
+    - Semana 7: Búsqueda y ordenamiento.
+    - Semana 14: Proyecto integrador - Sistema de inventarios FIFO y LIFO.
 """
 
 from __future__ import annotations
@@ -29,16 +38,19 @@ from typing import Dict, List, Any, Optional, Tuple
 # RUTAS
 # ============================================================
 
-CARPETA_DATA = "data"
+CARPETA_PROYECTO = os.path.dirname(os.path.abspath(__file__))
+CARPETA_DATA = os.path.join(CARPETA_PROYECTO, "data")
 BASE_JSON = os.path.join(CARPETA_DATA, "base_datos_inventario.json")
 DB_JSON = os.path.join(CARPETA_DATA, "sistema_inventario.json")
-CARPETA_REPORTES = "reportes"
+CARPETA_REPORTES = os.path.join(CARPETA_PROYECTO, "reportes")
 
 
 # ============================================================
 # MODELOS DE DATOS
 # ============================================================
 
+# Aca se uso el concepto de registro / dato compuesto del silabo:
+# cada dataclass representa una entidad con varios campos.
 @dataclass
 class Producto:
     codigo: str
@@ -191,6 +203,8 @@ class SistemaInventario:
     # --------------------------------------------------------
 
     def estructura_vacia(self) -> Dict[str, Any]:
+        # Aca se uso el concepto de diccionario y listas:
+        # el diccionario guarda claves y cada clave contiene una lista de datos.
         return {
             "productos": [],
             "entradas": [],
@@ -266,6 +280,8 @@ class SistemaInventario:
 
     def buscar_producto(self, codigo: str) -> Optional[Dict[str, Any]]:
         codigo = codigo.strip().upper()
+        # Aca se uso busqueda lineal:
+        # se recorre la lista producto por producto hasta encontrar el codigo.
         for producto in self.data["productos"]:
             if producto["codigo"].upper() == codigo:
                 return producto
@@ -285,6 +301,8 @@ class SistemaInventario:
         return "ID000"
 
     def siguiente_lote(self, codigo_producto: str) -> str:
+        # Aca se uso recorrido de lista con acumulacion:
+        # cuenta cuantos lotes existen para generar el siguiente lote.
         total = sum(1 for e in self.data["entradas"] if e["codigo_producto"] == codigo_producto)
         return f"L-{codigo_producto}-{total + 1:03d}"
 
@@ -324,6 +342,8 @@ class SistemaInventario:
         precio = leer_float("Precio referencial: S/ ", minimo=0)
 
         producto = Producto(codigo, nombre, categoria, unidad, stock_inicial, precio)
+        # Aca se uso insercion en lista:
+        # append agrega el producto al final de la lista.
         self.data["productos"].append(asdict(producto))
         self.registrar_historial("Producto registrado", f"{codigo} - {nombre} | Stock inicial: {cantidad(stock_inicial)}")
         print("Producto registrado correctamente.")
@@ -381,6 +401,8 @@ class SistemaInventario:
 
         confirmar = leer_opcion(f"¿Eliminar {producto['nombre']}? 1=Sí, 2=No: ", ["1", "2"])
         if confirmar == "1":
+            # Aca se uso eliminacion en lista:
+            # se reconstruye la lista quitando el producto seleccionado.
             self.data["productos"] = [p for p in self.data["productos"] if p["codigo"] != codigo]
             self.registrar_historial("Producto eliminado", f"{codigo} - {producto['nombre']}")
             print("Producto eliminado.")
@@ -393,6 +415,8 @@ class SistemaInventario:
 
     def listar_entradas(self) -> None:
         filas = []
+        # Aca se uso ordenamiento:
+        # sorted ordena las entradas por fecha y luego por ID.
         for e in sorted(self.data["entradas"], key=lambda x: (x["fecha"], x["id"])):
             filas.append({
                 "ID": e["id"],
@@ -428,6 +452,8 @@ class SistemaInventario:
             lote=lote,
             observacion="Compra registrada manualmente"
         )
+        # Aca se uso insercion en lista:
+        # cada entrada se agrega como lote para luego aplicar FIFO o LIFO.
         self.data["entradas"].append(asdict(entrada))
         self.registrar_historial("Entrada registrada", f"{entrada.id} | {codigo} | {cantidad(cantidad_)} unidades | {dinero(precio)}")
         print(f"Entrada registrada correctamente. Lote generado: {lote}")
@@ -438,6 +464,8 @@ class SistemaInventario:
 
     def listar_salidas(self) -> None:
         filas = []
+        # Aca se uso ordenamiento:
+        # sorted muestra las salidas en orden cronologico.
         for s in sorted(self.data["salidas"], key=lambda x: (x["fecha"], x["id"])):
             filas.append({
                 "ID": s["id"],
@@ -477,6 +505,8 @@ class SistemaInventario:
             estado="Atendido",
             observacion="Salida registrada manualmente"
         )
+        # Aca se uso insercion en lista:
+        # la salida se agrega al historial de movimientos de venta.
         self.data["salidas"].append(asdict(salida))
         self.registrar_historial("Salida registrada", f"{salida.id} | {codigo} | {cantidad(cantidad_salida)} unidades")
         print("Salida registrada correctamente.")
@@ -486,12 +516,18 @@ class SistemaInventario:
     # --------------------------------------------------------
 
     def calcular_stock_general(self) -> Dict[str, float]:
+        # Aca se uso diccionario de acumulacion:
+        # la clave es el codigo del producto y el valor es su stock.
         stock = {p["codigo"]: float(p.get("stock_inicial", 0)) for p in self.data["productos"]}
 
+        # Aca se uso recorrido de lista:
+        # suma todas las entradas al stock.
         for e in self.data["entradas"]:
             codigo = e["codigo_producto"]
             stock[codigo] = stock.get(codigo, 0) + float(e["cantidad"])
 
+        # Aca se uso recorrido de lista:
+        # resta las salidas atendidas o entregadas.
         for s in self.data["salidas"]:
             if s.get("estado", "Atendido") in ["Atendido", "Entregado"]:
                 codigo = s["codigo_producto"]
@@ -504,6 +540,8 @@ class SistemaInventario:
     # --------------------------------------------------------
 
     def generar_movimientos_ordenados(self) -> List[Dict[str, Any]]:
+        # Aca se uso lista:
+        # se unen entradas y salidas en una sola lista de movimientos.
         movimientos = []
 
         for e in self.data["entradas"]:
@@ -532,6 +570,8 @@ class SistemaInventario:
                     "observacion": s.get("observacion", "Venta")
                 })
 
+        # Aca se uso ordenamiento:
+        # se ordena por fecha, tipo de movimiento e ID.
         return sorted(movimientos, key=lambda x: (x["fecha"], x["orden_tipo"], x["id"]))
 
     def calcular_kardex(self, metodo: str) -> Dict[str, Any]:
@@ -543,17 +583,29 @@ class SistemaInventario:
 
         LIFO: usa una pila de lotes.
               Sale primero el lote que ingresó último.
+
+        En el sílabo, esto corresponde a pilas y colas:
+        - Cola FIFO: enqueue al agregar lote y dequeue al consumir el primero.
+        - Pila LIFO: push al agregar lote y pop al consumir el último.
         """
         metodo = metodo.upper()
         if metodo not in ["FIFO", "LIFO"]:
             raise ValueError("Método inválido. Usa FIFO o LIFO.")
 
+        # Aca se uso diccionario de listas:
+        # cada producto tiene su propia lista de lotes.
+        # Esa lista se comporta como cola FIFO o pila LIFO segun el metodo.
         lotes_por_producto: Dict[str, List[Dict[str, Any]]] = {}
+
+        # Aca se uso lista:
+        # kardex guarda cada movimiento como una fila del reporte.
         kardex: List[Dict[str, Any]] = []
         costo_ventas_total = 0.0
         faltantes_total = 0.0
 
         def saldo_producto(codigo: str) -> Tuple[float, float]:
+            # Aca se uso recorrido y acumulacion:
+            # suma cantidades y valores de los lotes restantes.
             lotes = lotes_por_producto.get(codigo, [])
             cant = sum(float(l["cantidad_restante"]) for l in lotes)
             val = sum(float(l["cantidad_restante"]) * float(l["precio_unitario"]) for l in lotes)
@@ -569,6 +621,8 @@ class SistemaInventario:
             codigo = p["codigo"]
             precio = float(p.get("precio_referencia", 0) or 0)
             lote_inicial = f"STOCK-INICIAL-{codigo}"
+            # Aca se uso lista de lotes:
+            # se inicia la lista del producto con su stock inicial.
             lotes_por_producto[codigo] = [{
                 "lote": lote_inicial,
                 "fecha": "INICIAL",
@@ -610,6 +664,8 @@ class SistemaInventario:
                     "cantidad_restante": mov["cantidad"],
                     "precio_unitario": mov["precio_unitario"]
                 }
+                # Aca se uso cola FIFO y pila LIFO:
+                # append agrega el lote al final. En FIFO es enqueue y en LIFO es push.
                 lotes_por_producto[codigo].append(lote_nuevo)
 
                 saldo_cant, saldo_valor = saldo_producto(codigo)
@@ -636,8 +692,9 @@ class SistemaInventario:
                 costo_salida = 0.0
 
                 while cantidad_por_vender > 0.000001 and lotes_por_producto[codigo]:
-                    # FIFO: se toma el primer lote de la lista.
-                    # LIFO: se toma el último lote de la lista.
+                    # Aca se uso FIFO y LIFO:
+                    # FIFO usa indice 0 porque sale primero el lote mas antiguo.
+                    # LIFO usa indice -1 porque sale primero el lote mas reciente.
                     indice = 0 if metodo == "FIFO" else -1
                     lote = lotes_por_producto[codigo][indice]
 
@@ -652,6 +709,8 @@ class SistemaInventario:
                     costo_ventas_total += costo
 
                     if lote["cantidad_restante"] <= 0.000001:
+                        # Aca se uso eliminacion en cola/pila:
+                        # pop elimina el lote agotado del frente FIFO o del tope LIFO.
                         lotes_por_producto[codigo].pop(indice)
 
                     saldo_cant, saldo_valor = saldo_producto(codigo)
@@ -696,6 +755,8 @@ class SistemaInventario:
 
         inventario_final = []
         valor_total_inventario = 0.0
+        # Aca se uso recorrido de diccionario:
+        # recorre los lotes restantes para calcular el inventario final.
         for codigo, lotes in lotes_por_producto.items():
             for lote in lotes:
                 cant_rest = float(lote["cantidad_restante"])
@@ -834,6 +895,8 @@ class SistemaInventario:
         print("COMPARACIÓN FIFO VS LIFO")
         imprimir_tabla(filas, ["Concepto", "FIFO", "LIFO", "Diferencia"])
         print("\nInterpretación:")
+        # Aca se uso comparacion de estructuras:
+        # se comparan los resultados de una cola FIFO y una pila LIFO.
         print("- FIFO consume primero los lotes más antiguos. Funciona como una COLA.")
         print("- LIFO consume primero los lotes más recientes. Funciona como una PILA.")
         print("- Si los precios cambian entre compras, el costo de ventas y el inventario final también cambian.")
@@ -880,6 +943,8 @@ class SistemaInventario:
         self.data["productos"].append(asdict(producto))
 
         entradas = [
+            # Aca se uso lista de prueba:
+            # el orden de los lotes demuestra la diferencia entre FIFO y LIFO.
             Entrada("E0001", "2026-07-01", "P001", 10, 3.0, "L-P001-001", "Caso de prueba"),
             Entrada("E0002", "2026-07-02", "P001", 10, 4.0, "L-P001-002", "Caso de prueba"),
             Entrada("E0003", "2026-07-03", "P001", 10, 5.0, "L-P001-003", "Caso de prueba"),
@@ -996,6 +1061,8 @@ class SistemaInventario:
                 estado=estado,
                 observacion="Venta importada desde Excel convertido a JSON"
             )
+            # Aca se uso insercion en lista:
+            # se agrega cada venta importada a la lista de salidas.
             self.data["salidas"].append(asdict(salida))
             ids_existentes.add(id_venta)
             importadas += 1
@@ -1209,3 +1276,4 @@ def menu_principal() -> None:
 
 if __name__ == "__main__":
     menu_principal()
+    
