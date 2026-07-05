@@ -6,11 +6,11 @@ Proyecto: Sistema de inventarios aplicando los métodos FIFO y LIFO
 Autor: adaptar nombres del grupo
 Descripción:
     Sistema funcional por consola que usa JSON como base de datos.
-    Permite gestionar productos, entradas, salidas, Kardex FIFO, Kardex LIFO,
+    Permite gestionar productos, entradas, salidas, movimientos FIFO, movimientos LIFO,
     comparación de resultados, historial y exportación CSV.
 
 Estructuras usadas:
-    - Listas: almacenan productos, entradas, salidas, historial y kardex.
+    - Listas: almacenan productos, entradas, salidas, historial y movimientos.
     - Diccionarios: permiten acceder a los datos por clave y agrupar lotes.
     - Búsqueda lineal: se usa para ubicar productos por código.
     - Ordenamiento: se usa para procesar movimientos por fecha e ID.
@@ -574,7 +574,7 @@ class SistemaInventario:
         # se ordena por fecha, tipo de movimiento e ID.
         return sorted(movimientos, key=lambda x: (x["fecha"], x["orden_tipo"], x["id"]))
 
-    def calcular_kardex(self, metodo: str) -> Dict[str, Any]:
+    def calcular_movimientos_inventario(self, metodo: str) -> Dict[str, Any]:
         """
         metodo = "FIFO" o "LIFO"
 
@@ -598,8 +598,8 @@ class SistemaInventario:
         lotes_por_producto: Dict[str, List[Dict[str, Any]]] = {}
 
         # Aca se uso lista:
-        # kardex guarda cada movimiento como una fila del reporte.
-        kardex: List[Dict[str, Any]] = []
+        # movimientos_reporte guarda cada operacion como una fila del reporte.
+        movimientos_reporte: List[Dict[str, Any]] = []
         costo_ventas_total = 0.0
         faltantes_total = 0.0
 
@@ -632,7 +632,7 @@ class SistemaInventario:
                 "precio_unitario": precio
             }]
 
-            kardex.append({
+            movimientos_reporte.append({
                 "Fecha": "INICIAL",
                 "Movimiento": "STOCK-INICIAL",
                 "Tipo": "STOCK INICIAL",
@@ -669,7 +669,7 @@ class SistemaInventario:
                 lotes_por_producto[codigo].append(lote_nuevo)
 
                 saldo_cant, saldo_valor = saldo_producto(codigo)
-                kardex.append({
+                movimientos_reporte.append({
                     "Fecha": mov["fecha"],
                     "Movimiento": mov["id"],
                     "Tipo": "ENTRADA",
@@ -714,7 +714,7 @@ class SistemaInventario:
                         lotes_por_producto[codigo].pop(indice)
 
                     saldo_cant, saldo_valor = saldo_producto(codigo)
-                    kardex.append({
+                    movimientos_reporte.append({
                         "Fecha": mov["fecha"],
                         "Movimiento": mov["id"],
                         "Tipo": "SALIDA",
@@ -735,7 +735,7 @@ class SistemaInventario:
                 if cantidad_por_vender > 0.000001:
                     faltantes_total += cantidad_por_vender
                     saldo_cant, saldo_valor = saldo_producto(codigo)
-                    kardex.append({
+                    movimientos_reporte.append({
                         "Fecha": mov["fecha"],
                         "Movimiento": mov["id"],
                         "Tipo": "SALIDA SIN STOCK",
@@ -775,7 +775,7 @@ class SistemaInventario:
 
         return {
             "metodo": metodo,
-            "kardex": kardex,
+            "movimientos": movimientos_reporte,
             "inventario_final": inventario_final,
             "costo_ventas_total": costo_ventas_total,
             "valor_total_inventario": valor_total_inventario,
@@ -806,8 +806,8 @@ class SistemaInventario:
         print(f"Productos sin stock         : {productos_sin_stock}")
 
         if total_entradas > 0 or total_salidas > 0:
-            fifo = self.calcular_kardex("FIFO")
-            lifo = self.calcular_kardex("LIFO")
+            fifo = self.calcular_movimientos_inventario("FIFO")
+            lifo = self.calcular_movimientos_inventario("LIFO")
             print("-" * 70)
             print(f"Costo de ventas FIFO        : {dinero(fifo['costo_ventas_total'])}")
             print(f"Costo de ventas LIFO        : {dinero(lifo['costo_ventas_total'])}")
@@ -836,15 +836,15 @@ class SistemaInventario:
         imprimir_tabla(filas, ["Código", "Producto", "Categoría", "Unidad", "Stock"], limite=100)
         pausa()
 
-    def mostrar_kardex(self, metodo: str) -> None:
+    def mostrar_movimientos_inventario(self, metodo: str) -> None:
         limpiar_pantalla()
-        resultado = self.calcular_kardex(metodo)
+        resultado = self.calcular_movimientos_inventario(metodo)
         print("=" * 90)
-        print(f"KARDEX {metodo.upper()}")
+        print(f"MOVIMIENTOS DE INVENTARIO {metodo.upper()}")
         print("=" * 90)
 
         filas = []
-        for r in resultado["kardex"]:
+        for r in resultado["movimientos"]:
             filas.append({
                 "Fecha": r["Fecha"],
                 "Mov.": r["Movimiento"],
@@ -868,8 +868,8 @@ class SistemaInventario:
 
     def comparar_fifo_lifo(self) -> None:
         limpiar_pantalla()
-        fifo = self.calcular_kardex("FIFO")
-        lifo = self.calcular_kardex("LIFO")
+        fifo = self.calcular_movimientos_inventario("FIFO")
+        lifo = self.calcular_movimientos_inventario("LIFO")
 
         filas = [
             {
@@ -885,10 +885,10 @@ class SistemaInventario:
                 "Diferencia": dinero(abs(fifo["valor_total_inventario"] - lifo["valor_total_inventario"]))
             },
             {
-                "Concepto": "Registros Kardex",
-                "FIFO": len(fifo["kardex"]),
-                "LIFO": len(lifo["kardex"]),
-                "Diferencia": abs(len(fifo["kardex"]) - len(lifo["kardex"]))
+                "Concepto": "Movimientos registrados",
+                "FIFO": len(fifo["movimientos"]),
+                "LIFO": len(lifo["movimientos"]),
+                "Diferencia": abs(len(fifo["movimientos"]) - len(lifo["movimientos"]))
             }
         ]
 
@@ -1087,10 +1087,10 @@ class SistemaInventario:
         print(f"Exportado: {ruta}")
 
     def exportar_reportes(self) -> None:
-        fifo = self.calcular_kardex("FIFO")
-        lifo = self.calcular_kardex("LIFO")
-        self.exportar_csv("kardex_fifo.csv", fifo["kardex"])
-        self.exportar_csv("kardex_lifo.csv", lifo["kardex"])
+        fifo = self.calcular_movimientos_inventario("FIFO")
+        lifo = self.calcular_movimientos_inventario("LIFO")
+        self.exportar_csv("movimientos_fifo.csv", fifo["movimientos"])
+        self.exportar_csv("movimientos_lifo.csv", lifo["movimientos"])
         self.exportar_csv("inventario_final_fifo.csv", fifo["inventario_final"])
         self.exportar_csv("inventario_final_lifo.csv", lifo["inventario_final"])
         self.exportar_csv("productos.csv", self.data["productos"])
@@ -1202,8 +1202,8 @@ def menu_reportes(sistema: SistemaInventario) -> None:
         print("MÓDULO DE REPORTES")
         print("=" * 60)
         print("1. Inventario disponible")
-        print("2. Kardex FIFO")
-        print("3. Kardex LIFO")
+        print("2. Movimientos FIFO")
+        print("3. Movimientos LIFO")
         print("4. Comparación FIFO vs LIFO")
         print("5. Historial de movimientos")
         print("6. Exportar reportes CSV")
@@ -1213,9 +1213,9 @@ def menu_reportes(sistema: SistemaInventario) -> None:
         if op == "1":
             sistema.mostrar_inventario_disponible()
         elif op == "2":
-            sistema.mostrar_kardex("FIFO")
+            sistema.mostrar_movimientos_inventario("FIFO")
         elif op == "3":
-            sistema.mostrar_kardex("LIFO")
+            sistema.mostrar_movimientos_inventario("LIFO")
         elif op == "4":
             sistema.comparar_fifo_lifo()
         elif op == "5":
