@@ -40,14 +40,10 @@ No requiere instalar librerías externas.
 
 Para probar la interfaz web con lectura del JSON del proyecto:
 
-```bash
-python3 -m http.server 8020
-```
-
-Luego abre:
+Abre:
 
 ```text
-http://127.0.0.1:8020/interfaz_web/index.html
+https://ansistgel28.github.io/sistema-inventario-don-pepe/interfaz_web/
 ```
 
 ## Menú principal
