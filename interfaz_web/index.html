@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La tiendita de Don Pepe</title>
+    <style>
+      :root {
+        --bg: #fff6ec;
+        --surface: #ffffff;
+        --surface-2: #fff0de;
+        --ink: #24170f;
+        --muted: #735f4d;
+        --line: #edd9c3;
+        --green: #f47b18;
+        --green-2: #fff0de;
+        --blue: #05a9df;
+        --blue-2: #e1f7ff;
+        --amber: #b35b00;
+        --amber-2: #fff2d7;
+        --red: #b43d3d;
+        --red-2: #fde7e7;
+        --shadow: 0 10px 28px rgba(85, 45, 12, 0.1);
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 18px;
+        background: #211710;
+        color: #fff8ef;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .brand {
+        padding: 8px 4px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-logo {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #f47b18;
+        background: #ffffff;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 1.04rem;
+        line-height: 1.25;
+      }
+
+      .brand span {
+        display: block;
+        margin-top: 6px;
+        color: #ffd9b6;
+        font-size: 0.86rem;
+      }
+
+      .menu {
+        display: grid;
+        gap: 7px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        min-height: 42px;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        background: transparent;
+        color: #ffe6ce;
+        text-align: left;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .nav-btn:hover,
+      .nav-btn.active {
+        background: #3a271a;
+        color: #ffffff;
+      }
+
+      .nav-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: rgba(244, 123, 24, 0.18);
+        color: #ffc58c;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .sidebar-actions {
+        margin-top: auto;
+        display: grid;
+        gap: 8px;
+      }
+
+      .main {
+        min-width: 0;
+        padding: 22px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        font-size: 1.65rem;
+      }
+
+      h2 {
+        font-size: 1.12rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .date-pill {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 9px 12px;
+        color: var(--muted);
+        box-shadow: var(--shadow);
+        white-space: nowrap;
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(5, minmax(130px, 1fr));
+        margin-bottom: 14px;
+      }
+
+      .two-cols {
+        grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      }
+
+      .three-cols {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .metric {
+        padding: 15px;
+      }
+
+      .metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 1.45rem;
+      }
+
+      .section {
+        padding: 16px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .section-head p {
+        margin: 4px 0 0;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .btn {
+        min-height: 38px;
+        padding: 9px 12px;
+        border-radius: var(--radius);
+        background: var(--green);
+        color: #ffffff;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .btn:hover {
+        filter: brightness(0.96);
+      }
+
+      .btn.secondary {
+        background: var(--surface);
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+
+      .btn.blue {
+        background: var(--blue);
+      }
+
+      .btn.danger {
+        background: var(--red);
+      }
+
+      .btn.small {
+        min-height: 32px;
+        padding: 7px 9px;
+        font-size: 0.88rem;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .field,
+      .form-row {
+        display: grid;
+        gap: 6px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      label {
+        color: var(--muted);
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+
+      input,
+      select {
+        min-height: 38px;
+        width: 100%;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fbfdfc;
+        color: var(--ink);
+      }
+
+      input:focus,
+      select:focus {
+        outline: 2px solid rgba(20, 132, 95, 0.18);
+        border-color: var(--green);
+      }
+
+      .full {
+        grid-column: 1 / -1;
+      }
+
+      .table-wrap {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 780px;
+        background: #ffffff;
+      }
+
+      th,
+      td {
+        padding: 10px 11px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+
+      th {
+        background: var(--surface-2);
+        color: #405047;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.82rem;
+      }
+
+      .status.ok {
+        color: var(--green);
+        background: var(--green-2);
+      }
+
+      .status.warn {
+        color: var(--amber);
+        background: var(--amber-2);
+      }
+
+      .status.info {
+        color: var(--blue);
+        background: var(--blue-2);
+      }
+
+      .status.bad {
+        color: var(--red);
+        background: var(--red-2);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .tab {
+        min-height: 36px;
+        padding: 8px 11px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--ink);
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .tab.active {
+        background: var(--blue);
+        color: #ffffff;
+        border-color: var(--blue);
+      }
+
+      .notice {
+        min-height: 40px;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        background: #fff0de;
+        color: #7b3c00;
+        display: none;
+        margin-bottom: 12px;
+        border: 1px solid #ffd1a4;
+      }
+
+      .notice.show {
+        display: block;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 9px;
+      }
+
+      .timeline-item {
+        padding: 11px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fbfdfc;
+      }
+
+      .timeline-item strong {
+        display: block;
+      }
+
+      .timeline-item span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .dashboard-analytics {
+        margin-top: 14px;
+      }
+
+      .chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .chart-card {
+        padding: 14px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      .chart-card h3 {
+        margin-bottom: 4px;
+      }
+
+      .chart-card p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .chart-wide {
+        grid-column: 1 / -1;
+      }
+
+      .bar-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: minmax(112px, 0.72fr) minmax(120px, 1.4fr) auto;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .bar-label {
+        min-width: 0;
+        color: #4c3b2b;
+        font-weight: 700;
+        font-size: 0.88rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bar-track {
+        height: 12px;
+        background: #fff0de;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        min-width: 3px;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+      }
+
+      .bar-value {
+        color: var(--muted);
+        font-size: 0.86rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .vertical-chart {
+        height: 220px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(42px, 1fr);
+        align-items: end;
+        gap: 10px;
+        padding-top: 8px;
+      }
+
+      .vbar {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 7px;
+        height: 100%;
+        text-align: center;
+      }
+
+      .vbar-value {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .vbar-track {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        min-height: 140px;
+        border-radius: var(--radius);
+        background: #fff7ef;
+        overflow: hidden;
+      }
+
+      .vbar-fill {
+        width: 100%;
+        min-height: 3px;
+        border-radius: var(--radius) var(--radius) 0 0;
+        background: linear-gradient(180deg, var(--blue), var(--green));
+      }
+
+      .vbar-label {
+        min-width: 0;
+        color: #4c3b2b;
+        font-size: 0.78rem;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .svg-chart {
+        min-height: 220px;
+      }
+
+      .svg-chart svg {
+        width: 100%;
+        height: 220px;
+        display: block;
+      }
+
+      .svg-axis {
+        stroke: #edd9c3;
+        stroke-width: 1;
+      }
+
+      .svg-line {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .svg-area {
+        fill: rgba(244, 123, 24, 0.2);
+        stroke: none;
+      }
+
+      .svg-point {
+        fill: var(--green);
+        stroke: #ffffff;
+        stroke-width: 3;
+      }
+
+      .svg-label {
+        fill: #735f4d;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .pie-layout {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 16px;
+        align-items: center;
+      }
+
+      .pie-chart {
+        width: 170px;
+        height: 170px;
+        border-radius: 50%;
+        background: conic-gradient(var(--line) 0 100%);
+        border: 10px solid #fff7ef;
+        box-shadow: inset 0 0 0 1px var(--line);
+      }
+
+      .legend {
+        display: grid;
+        gap: 8px;
+      }
+
+      .legend-item {
+        display: grid;
+        grid-template-columns: 12px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8px;
+        color: #4c3b2b;
+        font-size: 0.88rem;
+      }
+
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+      }
+
+      .legend-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .heatmap {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .heat-cell {
+        min-width: 0;
+        min-height: 92px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 10px 6px;
+        display: grid;
+        place-items: center;
+        gap: 5px;
+        color: #4c3b2b;
+        text-align: center;
+      }
+
+      .heat-cell strong {
+        font-size: 0.85rem;
+      }
+
+      .heat-cell span {
+        color: #24170f;
+        font-weight: 800;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 18px;
+        text-align: center;
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
+      @media (max-width: 1060px) {
+        .summary-grid,
+        .three-cols,
+        .two-cols {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          padding: 14px;
+        }
+
+        .menu {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sidebar-actions {
+          margin-top: 0;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .summary-grid,
+        .three-cols,
+        .chart-grid,
+        .two-cols,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: minmax(88px, 0.8fr) minmax(96px, 1.2fr) auto;
+        }
+
+        .pie-layout {
+          grid-template-columns: 1fr;
+          justify-items: center;
+        }
+
+        .heatmap {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        .main {
+          padding: 14px;
+        }
+
+        .menu,
+        .sidebar-actions {
+          grid-template-columns: 1fr;
+        }
+
+        .toolbar,
+        .section-head {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .actions {
+          width: 100%;
+        }
+
+        .actions .btn,
+        .toolbar .btn {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <img class="brand-logo" src="assets/don-pepe.png" alt="Logo de La tiendita de Don Pepe" />
+          <div>
+            <strong>La tiendita de Don Pepe</strong>
+            <span>Sistema de ventas e inventario</span>
+          </div>
+        </div>
+
+        <nav class="menu" aria-label="Menú principal">
+          <button class="nav-btn active" data-view="dashboard"><span class="nav-icon">1</span><span>Inicio</span></button>
+          <button class="nav-btn" data-view="productos"><span class="nav-icon">2</span><span>Productos</span></button>
+          <button class="nav-btn" data-view="entradas"><span class="nav-icon">3</span><span>Compras</span></button>
+          <button class="nav-btn" data-view="salidas"><span class="nav-icon">4</span><span>Ventas</span></button>
+          <button class="nav-btn" data-view="reportes"><span class="nav-icon">5</span><span>Reportes</span></button>
+          <button class="nav-btn" data-action="test-case"><span class="nav-icon">6</span><span>Caso de prueba</span></button>
+          <button class="nav-btn" data-view="teoria"><span class="nav-icon">7</span><span>Ayuda</span></button>
+        </nav>
+
+        <div class="sidebar-actions">
+          <button class="btn blue" id="syncJsonBtn">Sincronizar JSON</button>
+          <button class="btn secondary" id="backupBtn">Descargar copia</button>
+          <button class="btn danger" id="resetBtn">Restablecer datos</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div>
+            <h1 id="pageTitle">Inicio</h1>
+            <div class="muted" id="pageSubtitle">Resumen del inventario y resultados FIFO/LIFO.</div>
+          </div>
+          <div class="date-pill" id="currentDate"></div>
+        </div>
+
+        <div class="notice" id="notice"></div>
+
+        <section class="view active" id="dashboard">
+          <div class="grid summary-grid" id="summaryCards"></div>
+
+          <div class="grid two-cols">
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Comparación de costos</h2>
+                  <p>Costo de productos vendidos y valor actual del stock por método.</p>
+                </div>
+                <button class="btn blue small" data-view-link="reportes">Ver reportes</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Concepto</th>
+                      <th>FIFO</th>
+                      <th>LIFO</th>
+                      <th>Diferencia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardCompare"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Historial reciente</h2>
+                  <p>Últimas acciones registradas.</p>
+                </div>
+              </div>
+              <div class="timeline" id="recentHistory"></div>
+            </div>
+          </div>
+
+          <div class="card section dashboard-analytics">
+            <div class="section-head">
+              <div>
+                <h2>Análisis de ventas y stock</h2>
+                <p>Gráficas actualizadas con los datos registrados en el sistema.</p>
+              </div>
+            </div>
+
+            <div class="grid chart-grid">
+              <div class="chart-card">
+                <h3>Ventas por día</h3>
+                <p>Barras para comparar los días con más y menos ventas.</p>
+                <div id="chartSalesByDay"></div>
+              </div>
+
+              <div class="chart-card">
+                <h3>Evolución mensual</h3>
+                <p>Línea para ver cómo cambian las ventas por mes.</p>
+                <div id="chartMonthlyLine"></div>
+              </div>
+
+              <div class="chart-card">
+                <h3>Ventas por categoría</h3>
+                <p>Circular para ver el porcentaje vendido por categoría.</p>
+                <div id="chartCategoryPie"></div>
+              </div>
+
+              <div class="chart-card">
+                <h3>Productos más vendidos</h3>
+                <p>Ranking por unidades vendidas.</p>
+                <div id="chartTopProducts"></div>
+              </div>
+
+              <div class="chart-card">
+                <h3>Patrón semanal</h3>
+                <p>Heatmap para detectar qué días de la semana se vende más.</p>
+                <div id="chartWeekHeatmap"></div>
+              </div>
+
+              <div class="chart-card">
+                <h3>Ventas acumuladas</h3>
+                <p>Área acumulada para ver el crecimiento de salidas.</p>
+                <div id="chartCumulativeArea"></div>
+              </div>
+
+              <div class="chart-card chart-wide">
+                <h3>Detalle de stock crítico</h3>
+                <p>Tabla de productos agotados o con menor cantidad disponible.</p>
+                <div id="chartLowStockTable"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="productos">
+          <div class="grid two-cols">
+            <div class="card section">
+              <div class="toolbar">
+                <h2>Catálogo de productos</h2>
+                <input id="productSearch" type="search" placeholder="Buscar por código, nombre o categoría" />
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Código</th>
+                      <th>Nombre</th>
+                      <th>Categoría</th>
+                      <th>Unidad</th>
+                      <th>Stock inicial</th>
+                      <th>Stock</th>
+                      <th>Precio ref.</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productsTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2 id="productFormTitle">Registrar producto</h2>
+                  <p id="productFormHint">El código puede quedar vacío para generarlo automáticamente.</p>
+                </div>
+              </div>
+              <form id="productForm" class="form-grid">
+                <input type="hidden" id="productEditing" />
+                <div class="field">
+                  <label for="productCode">Código</label>
+                  <input id="productCode" placeholder="P021" />
+                </div>
+                <div class="field">
+                  <label for="productName">Nombre</label>
+                  <input id="productName" required />
+                </div>
+                <div class="field">
+                  <label for="productCategory">Categoría</label>
+                  <select id="productCategory" required>
+                    <option value="">Seleccionar</option>
+                    <option value="Abarrotes">Abarrotes</option>
+                    <option value="Lácteos">Lácteos</option>
+                    <option value="Lácteos y huevos">Lácteos y huevos</option>
+                    <option value="Carnes">Carnes</option>
+                    <option value="Conservas">Conservas</option>
+                    <option value="Tubérculos">Tubérculos</option>
+                    <option value="Verduras">Verduras</option>
+                    <option value="Frutas">Frutas</option>
+                    <option value="Panadería">Panadería</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="productUnit">Unidad</label>
+                  <input id="productUnit" required />
+                </div>
+                <div class="field">
+                  <label for="productInitialStock">Stock inicial</label>
+                  <input id="productInitialStock" type="number" min="0" step="0.0001" value="0" required />
+                </div>
+                <div class="field">
+                  <label for="productPrice">Precio referencial</label>
+                  <input id="productPrice" type="number" min="0" step="0.01" required />
+                </div>
+                <div class="actions full">
+                  <button class="btn" type="submit">Guardar producto</button>
+                  <button class="btn secondary" type="button" id="cancelProductEdit">Limpiar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="entradas">
+          <div class="grid two-cols">
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Compras</h2>
+                  <p>Productos comprados con lote y precio de compra.</p>
+                </div>
+                <button class="btn blue small" id="generateEntriesBtn">Generar compras de prueba</button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Fecha</th>
+                      <th>Código</th>
+                      <th>Producto</th>
+                      <th>Cantidad comprada</th>
+                      <th>Precio de compra</th>
+                      <th>Total</th>
+                      <th>Lote generado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="entriesTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Registrar compra</h2>
+                  <p>El lote se genera automáticamente para identificar la compra.</p>
+                </div>
+              </div>
+              <form id="entryForm" class="form-grid">
+                <div class="field full">
+                  <label for="entryProduct">Producto</label>
+                  <select id="entryProduct" required></select>
+                </div>
+                <div class="field">
+                  <label for="entryDate">Fecha</label>
+                  <input id="entryDate" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="entryQty">Cantidad comprada</label>
+                  <input id="entryQty" type="number" min="0.0001" step="0.0001" required />
+                </div>
+                <div class="field full">
+                  <label for="entryPrice">Precio de compra</label>
+                  <input id="entryPrice" type="number" min="0.0001" step="0.01" required />
+                </div>
+                <div class="actions full">
+                  <button class="btn" type="submit">Registrar compra</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="salidas">
+          <div class="grid two-cols">
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Ventas</h2>
+                  <p>Solo se permite vender si hay stock disponible.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Fecha</th>
+                      <th>Código</th>
+                      <th>Producto</th>
+                      <th>Cantidad vendida</th>
+                      <th>Estado</th>
+                      <th>Observación</th>
+                    </tr>
+                  </thead>
+                  <tbody id="outputsTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card section">
+              <div class="section-head">
+                <div>
+                  <h2>Registrar venta</h2>
+                  <p id="stockHint">Selecciona un producto para ver su stock.</p>
+                </div>
+              </div>
+              <form id="outputForm" class="form-grid">
+                <div class="field full">
+                  <label for="outputProduct">Producto</label>
+                  <select id="outputProduct" required></select>
+                </div>
+                <div class="field">
+                  <label for="outputDate">Fecha</label>
+                  <input id="outputDate" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="outputQty">Cantidad vendida</label>
+                  <input id="outputQty" type="number" min="0.0001" step="0.0001" required />
+                </div>
+                <div class="actions full">
+                  <button class="btn" type="submit">Registrar venta</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="reportes">
+          <div class="card section">
+            <div class="section-head">
+              <div>
+                <h2>Reportes de inventario</h2>
+                <p>Stock disponible, movimientos por método, comparación e historial.</p>
+              </div>
+              <div class="actions">
+                <button class="btn blue small" id="exportCsvBtn">Descargar reporte</button>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <button class="tab active" data-report="inventory">Stock disponible</button>
+              <button class="tab" data-report="fifo">Primeras compras (FIFO)</button>
+              <button class="tab" data-report="lifo">Últimas compras (LIFO)</button>
+              <button class="tab" data-report="compare">Comparación de costos</button>
+              <button class="tab" data-report="history">Historial</button>
+            </div>
+
+            <div id="reportContent"></div>
+          </div>
+        </section>
+
+        <section class="view" id="teoria">
+          <div class="grid three-cols">
+            <div class="card section">
+              <h2>FIFO</h2>
+              <p class="muted">First In, First Out. Para calcular el costo se usan primero las compras más antiguas.</p>
+            </div>
+            <div class="card section">
+              <h2>LIFO</h2>
+              <p class="muted">Last In, First Out. Para calcular el costo se usan primero las compras más recientes.</p>
+            </div>
+            <div class="card section">
+              <h2>Comparación</h2>
+              <p class="muted">Cuando los precios cambian entre compras, el costo de venta y el valor final del inventario pueden variar.</p>
+            </div>
+            <div class="card section">
+              <h2>Créditos</h2>
+              <p class="muted">Jean Bustamante 60%, Miguel 40%</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const STORAGE_KEY = "inventario_fifo_lifo_web_v2";
+      const PROJECT_JSON_PATH = "../data/sistema_inventario.json";
+      const today = () => new Date().toISOString().slice(0, 10);
+      const clone = (value) => JSON.parse(JSON.stringify(value));
+
+      const initialData = {
+        productos: [
+          { codigo: "P001", nombre: "Arroz extra 5 kg", categoria: "Abarrotes", unidad: "bolsa 5 kg", stock_inicial: 0, precio_referencia: 24.5 },
+          { codigo: "P002", nombre: "Azúcar rubia 1 kg", categoria: "Abarrotes", unidad: "kg", stock_inicial: 0, precio_referencia: 4.3 },
+          { codigo: "P003", nombre: "Aceite vegetal 900 ml", categoria: "Abarrotes", unidad: "botella", stock_inicial: 0, precio_referencia: 8.9 },
+          { codigo: "P004", nombre: "Fideos 500 g", categoria: "Abarrotes", unidad: "paquete", stock_inicial: 0, precio_referencia: 3.2 },
+          { codigo: "P005", nombre: "Harina de trigo 1 kg", categoria: "Abarrotes", unidad: "kg", stock_inicial: 0, precio_referencia: 5.1 },
+          { codigo: "P006", nombre: "Lenteja 500 g", categoria: "Abarrotes", unidad: "paquete", stock_inicial: 0, precio_referencia: 4.6 },
+          { codigo: "P007", nombre: "Avena 380 g", categoria: "Abarrotes", unidad: "paquete", stock_inicial: 0, precio_referencia: 4.5 },
+          { codigo: "P008", nombre: "Sal yodada 1 kg", categoria: "Abarrotes", unidad: "kg", stock_inicial: 0, precio_referencia: 2.4 },
+          { codigo: "P009", nombre: "Leche evaporada 400 g", categoria: "Lácteos", unidad: "lata", stock_inicial: 0, precio_referencia: 4.2 },
+          { codigo: "P010", nombre: "Huevos docena", categoria: "Lácteos y huevos", unidad: "docena", stock_inicial: 0, precio_referencia: 9.8 },
+          { codigo: "P011", nombre: "Pollo eviscerado 1 kg", categoria: "Carnes", unidad: "kg", stock_inicial: 0, precio_referencia: 10.5 },
+          { codigo: "P012", nombre: "Jurel en lata 170 g", categoria: "Conservas", unidad: "lata", stock_inicial: 0, precio_referencia: 4.8 },
+          { codigo: "P013", nombre: "Atún en lata 170 g", categoria: "Conservas", unidad: "lata", stock_inicial: 0, precio_referencia: 5.8 },
+          { codigo: "P014", nombre: "Papa blanca 1 kg", categoria: "Tubérculos", unidad: "kg", stock_inicial: 0, precio_referencia: 2.8 },
+          { codigo: "P015", nombre: "Zanahoria 1 kg", categoria: "Verduras", unidad: "kg", stock_inicial: 0, precio_referencia: 2.5 },
+          { codigo: "P016", nombre: "Plátano 1 kg", categoria: "Frutas", unidad: "kg", stock_inicial: 0, precio_referencia: 3 },
+          { codigo: "P017", nombre: "Pan francés", categoria: "Panadería", unidad: "unidad", stock_inicial: 0, precio_referencia: 0.4 },
+          { codigo: "P018", nombre: "Detergente 500 g", categoria: "Limpieza", unidad: "bolsa", stock_inicial: 0, precio_referencia: 4.7 },
+          { codigo: "P019", nombre: "Jabón de lavar 240 g", categoria: "Limpieza", unidad: "unidad", stock_inicial: 0, precio_referencia: 3.2 },
+          { codigo: "P020", nombre: "Papel higiénico pack x4", categoria: "Limpieza", unidad: "pack", stock_inicial: 0, precio_referencia: 7.5 }
+        ],
+        entradas: [],
+        salidas: [],
+        historial: [
+          {
+            fecha_hora: nowText(),
+            accion: "Carga inicial",
+            detalle: "Se cargaron 20 productos base en la interfaz web"
+          }
+        ],
+        metadatos: {
+          nombre_sistema: "La tiendita de Don Pepe",
+          creado: nowText(),
+          descripcion: "Base local en navegador para la interfaz web"
+        }
+      };
+
+      let data = loadData();
+      let activeReport = "inventory";
+
+      const titles = {
+        dashboard: ["Inicio", "Resumen del inventario y resultados FIFO/LIFO."],
+        productos: ["Productos", "Registrar, editar, eliminar y consultar stock."],
+        entradas: ["Compras", "Registrar compras y generar lotes de inventario."],
+        salidas: ["Ventas", "Registrar ventas con validación de stock."],
+        reportes: ["Reportes de inventario", "Stock disponible, movimientos por método, comparación e historial."],
+        teoria: ["Ayuda sobre métodos", "Relación entre inventarios, primeras compras y últimas compras."]
+      };
+
+      const money = (value) => `S/ ${Number(value || 0).toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const qty = (value) => {
+        const n = Number(value || 0);
+        return Math.abs(n - Math.trunc(n)) < 0.000001 ? String(Math.trunc(n)) : n.toFixed(2);
+      };
+
+      function nowText() {
+        const d = new Date();
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      }
+
+      function loadData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return clone(initialData);
+        try {
+          const parsed = JSON.parse(saved);
+          return { ...clone(initialData), ...parsed };
+        } catch {
+          return clone(initialData);
+        }
+      }
+
+      function normalizeData(source) {
+        const base = clone(initialData);
+        return {
+          ...base,
+          ...source,
+          productos: Array.isArray(source.productos)
+            ? source.productos.map((p) => ({
+                codigo: String(p.codigo || "").trim(),
+                nombre: String(p.nombre || "").trim(),
+                categoria: String(p.categoria || "Otros").trim(),
+                unidad: String(p.unidad || "unidad").trim(),
+                stock_inicial: Number(p.stock_inicial || 0),
+                precio_referencia: Number(p.precio_referencia || 0)
+              })).filter((p) => p.codigo && p.nombre)
+            : base.productos,
+          entradas: Array.isArray(source.entradas) ? source.entradas : [],
+          salidas: Array.isArray(source.salidas) ? source.salidas : [],
+          historial: Array.isArray(source.historial) ? source.historial : base.historial,
+          metadatos: source.metadatos || base.metadatos
+        };
+      }
+
+      function isDefaultBrowserData() {
+        return (
+          data.productos.length === initialData.productos.length &&
+          data.entradas.length === 0 &&
+          data.salidas.length === 0 &&
+          data.productos.every((p, index) => p.codigo === initialData.productos[index].codigo && p.nombre === initialData.productos[index].nombre)
+        );
+      }
+
+      async function syncFromProjectJson(options = {}) {
+        const auto = Boolean(options.auto);
+        const hasSavedData = Boolean(localStorage.getItem(STORAGE_KEY));
+
+        if (auto && hasSavedData && !isDefaultBrowserData()) return;
+        if (!auto && hasSavedData && !confirm("Esto reemplazará los datos actuales de la web por los guardados desde main.py. ¿Continuar?")) return;
+
+        try {
+          const response = await fetch(`${PROJECT_JSON_PATH}?t=${Date.now()}`, { cache: "no-store" });
+          if (!response.ok) throw new Error("No se pudo leer el JSON del proyecto.");
+          const projectData = normalizeData(await response.json());
+
+          data = projectData;
+          saveData();
+          renderAll();
+          notify(`Datos sincronizados desde main.py: ${data.productos.length} productos cargados.`);
+        } catch (error) {
+          if (!auto) {
+            notify("No se pudo leer data/sistema_inventario.json. Abre la web con: python3 -m http.server 8020");
+          }
+        }
+      }
+
+      function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      function notify(message) {
+        const box = document.getElementById("notice");
+        box.textContent = message;
+        box.classList.add("show");
+        window.clearTimeout(notify.timer);
+        notify.timer = window.setTimeout(() => box.classList.remove("show"), 3200);
+      }
+
+      function addHistory(accion, detalle) {
+        data.historial.push({ fecha_hora: nowText(), accion, detalle });
+      }
+
+      function findProduct(code) {
+        return data.productos.find((p) => p.codigo.toUpperCase() === String(code).toUpperCase());
+      }
+
+      function productName(code) {
+        const product = findProduct(code);
+        return product ? product.nombre : "Producto no encontrado";
+      }
+
+      function nextId(type) {
+        if (type === "entrada") return `E${String(data.entradas.length + 1).padStart(4, "0")}`;
+        if (type === "salida") return `S${String(data.salidas.length + 1).padStart(4, "0")}`;
+        const used = new Set(data.productos.map((p) => p.codigo.toUpperCase()));
+        let number = data.productos.length + 1;
+        let code = `P${String(number).padStart(3, "0")}`;
+        while (used.has(code)) {
+          number += 1;
+          code = `P${String(number).padStart(3, "0")}`;
+        }
+        return code;
+      }
+
+      function nextLot(code) {
+        const total = data.entradas.filter((e) => e.codigo_producto === code).length;
+        return `L-${code}-${String(total + 1).padStart(3, "0")}`;
+      }
+
+      function stockGeneral() {
+        const stock = {};
+        data.productos.forEach((p) => {
+          stock[p.codigo] = Number(p.stock_inicial || 0);
+        });
+        data.entradas.forEach((e) => {
+          stock[e.codigo_producto] = Number(stock[e.codigo_producto] || 0) + Number(e.cantidad || 0);
+        });
+        data.salidas.forEach((s) => {
+          if (["Atendido", "Entregado"].includes(s.estado || "Atendido")) {
+            stock[s.codigo_producto] = Number(stock[s.codigo_producto] || 0) - Number(s.cantidad || 0);
+          }
+        });
+        return stock;
+      }
+
+      function orderedMovements() {
+        const entries = data.entradas.map((e) => ({
+          tipo: "entrada",
+          orden_tipo: 1,
+          fecha: e.fecha,
+          id: e.id,
+          codigo_producto: e.codigo_producto,
+          cantidad: Number(e.cantidad),
+          precio_unitario: Number(e.precio_unitario),
+          lote: e.lote,
+          observacion: e.observacion || "Compra"
+        }));
+        const outputs = data.salidas
+          .filter((s) => ["Atendido", "Entregado"].includes(s.estado || "Atendido"))
+          .map((s) => ({
+            tipo: "salida",
+            orden_tipo: 2,
+            fecha: s.fecha,
+            id: s.id,
+            codigo_producto: s.codigo_producto,
+            cantidad: Number(s.cantidad),
+            estado: s.estado || "Atendido",
+            observacion: s.observacion || "Venta"
+          }));
+
+        return [...entries, ...outputs].sort((a, b) =>
+          `${a.fecha}-${a.orden_tipo}-${a.id}`.localeCompare(`${b.fecha}-${b.orden_tipo}-${b.id}`)
+        );
+      }
+
+      function calculateKardex(method) {
+        const metodo = method.toUpperCase();
+        const lotsByProduct = {};
+        const kardex = [];
+        let costoVentasTotal = 0;
+        let faltantesTotal = 0;
+
+        const balance = (code) => {
+          const lots = lotsByProduct[code] || [];
+          const cant = lots.reduce((sum, lot) => sum + Number(lot.cantidad_restante), 0);
+          const value = lots.reduce((sum, lot) => sum + Number(lot.cantidad_restante) * Number(lot.precio_unitario), 0);
+          return [cant, value];
+        };
+
+        data.productos.forEach((product) => {
+          const initialStock = Number(product.stock_inicial || 0);
+          if (initialStock <= 0) return;
+
+          const code = product.codigo;
+          const price = Number(product.precio_referencia || 0);
+          const initialLot = `STOCK-INICIAL-${code}`;
+          lotsByProduct[code] = [
+            {
+              lote: initialLot,
+              fecha: "INICIAL",
+              id_entrada: "STOCK-INICIAL",
+              cantidad_inicial: initialStock,
+              cantidad_restante: initialStock,
+              precio_unitario: price
+            }
+          ];
+
+          kardex.push({
+            Fecha: "INICIAL",
+            Movimiento: "STOCK-INICIAL",
+            Tipo: "STOCK INICIAL",
+            Código: code,
+            Producto: product.nombre,
+            "Lote usado": initialLot,
+            "Entrada cant.": initialStock,
+            "Entrada P.U.": price,
+            "Entrada total": initialStock * price,
+            "Salida cant.": 0,
+            "Salida P.U.": 0,
+            "Costo venta": 0,
+            "Saldo cant.": initialStock,
+            "Saldo valor": initialStock * price,
+            Detalle: "Stock disponible al registrar el producto"
+          });
+        });
+
+        orderedMovements().forEach((mov) => {
+          const code = mov.codigo_producto;
+          lotsByProduct[code] = lotsByProduct[code] || [];
+
+          if (mov.tipo === "entrada") {
+            lotsByProduct[code].push({
+              lote: mov.lote,
+              fecha: mov.fecha,
+              id_entrada: mov.id,
+              cantidad_inicial: mov.cantidad,
+              cantidad_restante: mov.cantidad,
+              precio_unitario: mov.precio_unitario
+            });
+            const [saldoCant, saldoValor] = balance(code);
+            kardex.push({
+              Fecha: mov.fecha,
+              Movimiento: mov.id,
+              Tipo: "ENTRADA",
+              Código: code,
+              Producto: productName(code),
+              "Lote usado": mov.lote,
+              "Entrada cant.": mov.cantidad,
+              "Entrada P.U.": mov.precio_unitario,
+              "Entrada total": mov.cantidad * mov.precio_unitario,
+              "Salida cant.": 0,
+              "Salida P.U.": 0,
+              "Costo venta": 0,
+              "Saldo cant.": saldoCant,
+              "Saldo valor": saldoValor,
+              Detalle: "Ingreso de lote al inventario"
+            });
+            return;
+          }
+
+          let remaining = mov.cantidad;
+          while (remaining > 0.000001 && lotsByProduct[code].length) {
+            const index = metodo === "FIFO" ? 0 : lotsByProduct[code].length - 1;
+            const lot = lotsByProduct[code][index];
+            const used = Math.min(remaining, Number(lot.cantidad_restante));
+            const price = Number(lot.precio_unitario);
+            const cost = used * price;
+
+            lot.cantidad_restante = Number(lot.cantidad_restante) - used;
+            remaining -= used;
+            costoVentasTotal += cost;
+
+            if (lot.cantidad_restante <= 0.000001) lotsByProduct[code].splice(index, 1);
+            const [saldoCant, saldoValor] = balance(code);
+            kardex.push({
+              Fecha: mov.fecha,
+              Movimiento: mov.id,
+              Tipo: "SALIDA",
+              Código: code,
+              Producto: productName(code),
+              "Lote usado": lot.lote,
+              "Entrada cant.": 0,
+              "Entrada P.U.": 0,
+              "Entrada total": 0,
+              "Salida cant.": used,
+              "Salida P.U.": price,
+              "Costo venta": cost,
+              "Saldo cant.": saldoCant,
+              "Saldo valor": saldoValor,
+              Detalle: `Venta procesada con método ${metodo}`
+            });
+          }
+
+          if (remaining > 0.000001) {
+            faltantesTotal += remaining;
+            const [saldoCant, saldoValor] = balance(code);
+            kardex.push({
+              Fecha: mov.fecha,
+              Movimiento: mov.id,
+              Tipo: "SALIDA SIN STOCK",
+              Código: code,
+              Producto: productName(code),
+              "Lote usado": "SIN LOTE",
+              "Entrada cant.": 0,
+              "Entrada P.U.": 0,
+              "Entrada total": 0,
+              "Salida cant.": remaining,
+              "Salida P.U.": 0,
+              "Costo venta": 0,
+              "Saldo cant.": saldoCant,
+              "Saldo valor": saldoValor,
+              Detalle: "No había stock suficiente para cubrir toda la salida"
+            });
+          }
+        });
+
+        const finalInventory = [];
+        let valorTotalInventario = 0;
+        Object.entries(lotsByProduct).forEach(([code, lots]) => {
+          lots.forEach((lot) => {
+            const value = Number(lot.cantidad_restante) * Number(lot.precio_unitario);
+            valorTotalInventario += value;
+            finalInventory.push({
+              Código: code,
+              Producto: productName(code),
+              Lote: lot.lote,
+              Cantidad: Number(lot.cantidad_restante),
+              "Precio unitario": Number(lot.precio_unitario),
+              Valor: value,
+              "Fecha lote": lot.fecha
+            });
+          });
+        });
+
+        return {
+          metodo,
+          kardex,
+          inventario_final: finalInventory,
+          costo_ventas_total: costoVentasTotal,
+          valor_total_inventario: valorTotalInventario,
+          faltantes_total: faltantesTotal
+        };
+      }
+
+      function switchView(view) {
+        document.querySelectorAll(".view").forEach((el) => el.classList.toggle("active", el.id === view));
+        document.querySelectorAll(".nav-btn[data-view]").forEach((btn) => btn.classList.toggle("active", btn.dataset.view === view));
+        document.getElementById("pageTitle").textContent = titles[view][0];
+        document.getElementById("pageSubtitle").textContent = titles[view][1];
+        if (view === "reportes") renderReport();
+      }
+
+      function renderAll() {
+        document.getElementById("currentDate").textContent = new Date().toLocaleDateString("es-PE", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+        renderSummary();
+        renderProducts();
+        renderProductOptions();
+        renderEntries();
+        renderOutputs();
+        renderDashboardCompare();
+        renderHistory();
+        renderDashboardCharts();
+        renderReport();
+      }
+
+      function renderSummary() {
+        const stock = stockGeneral();
+        const fifo = calculateKardex("FIFO");
+        const productsWithStock = data.productos.filter((p) => Number(stock[p.codigo] || 0) > 0).length;
+        const productsNoStock = data.productos.length - productsWithStock;
+        const cards = [
+          ["Productos", data.productos.length],
+          ["Compras", data.entradas.length],
+          ["Ventas", data.salidas.length],
+          ["Disponibles", productsWithStock],
+          ["Agotados", productsNoStock],
+          ["Costo vendidos FIFO", money(fifo.costo_ventas_total)],
+          ["Valor stock FIFO", money(fifo.valor_total_inventario)]
+        ];
+
+        document.getElementById("summaryCards").innerHTML = cards
+          .map(([label, value]) => `<div class="card metric"><span>${label}</span><strong>${value}</strong></div>`)
+          .join("");
+      }
+
+      function renderDashboardCompare() {
+        const fifo = calculateKardex("FIFO");
+        const lifo = calculateKardex("LIFO");
+        document.getElementById("dashboardCompare").innerHTML = comparisonRows(fifo, lifo)
+          .map((r) => `<tr><td>${r.Concepto}</td><td>${r.FIFO}</td><td>${r.LIFO}</td><td>${r.Diferencia}</td></tr>`)
+          .join("");
+      }
+
+      function renderHistory() {
+        const recent = [...data.historial].slice(-6).reverse();
+        document.getElementById("recentHistory").innerHTML = recent.length
+          ? recent.map((h) => `<div class="timeline-item"><strong>${h.accion}</strong><span>${h.fecha_hora} | ${h.detalle}</span></div>`).join("")
+          : `<div class="empty">No hay historial registrado.</div>`;
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function acceptedSales() {
+        return data.salidas.filter((sale) => ["Atendido", "Entregado"].includes(sale.estado || "Atendido"));
+      }
+
+      function monthLabel(monthKey) {
+        const [year, month] = monthKey.split("-");
+        const date = new Date(Number(year), Number(month) - 1, 1);
+        return date.toLocaleDateString("es-PE", { month: "short", year: "numeric" }).replace(".", "");
+      }
+
+      function addToMap(map, key, amount) {
+        map.set(key, Number(map.get(key) || 0) + Number(amount || 0));
+      }
+
+      function knownCategory(category) {
+        const select = document.getElementById("productCategory");
+        const allowed = new Set([...select.options].map((option) => option.value).filter(Boolean));
+        return allowed.has(category) ? category : "Otros";
+      }
+
+      function renderHorizontalBars(containerId, rows, emptyMessage) {
+        const container = document.getElementById(containerId);
+        if (!rows.length) {
+          container.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+          return;
+        }
+
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        container.innerHTML = `<div class="bar-list">${rows
+          .map((row) => {
+            const width = Math.max((row.value / max) * 100, 2);
+            return `<div class="bar-row">
+              <span class="bar-label" title="${escapeHtml(row.label)}">${escapeHtml(row.label)}</span>
+              <span class="bar-track"><span class="bar-fill" style="width:${width}%"></span></span>
+              <span class="bar-value">${qty(row.value)}</span>
+            </div>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function renderVerticalBars(containerId, rows, emptyMessage) {
+        const container = document.getElementById(containerId);
+        if (!rows.length) {
+          container.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+          return;
+        }
+
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        container.innerHTML = `<div class="vertical-chart">${rows
+          .map((row) => {
+            const height = Math.max((row.value / max) * 100, 2);
+            return `<div class="vbar">
+              <span class="vbar-value">${qty(row.value)}</span>
+              <span class="vbar-track"><span class="vbar-fill" style="height:${height}%"></span></span>
+              <span class="vbar-label" title="${escapeHtml(row.label)}">${escapeHtml(row.label)}</span>
+            </div>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function chartColors() {
+        return ["#f47b18", "#05a9df", "#ffbf47", "#14845f", "#b43d3d", "#7b61ff", "#00a98f", "#d95f02"];
+      }
+
+      function renderLineAreaChart(containerId, rows, emptyMessage, mode = "line") {
+        const container = document.getElementById(containerId);
+        if (!rows.length) {
+          container.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+          return;
+        }
+
+        const width = 360;
+        const height = 220;
+        const pad = { top: 26, right: 18, bottom: 42, left: 34 };
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        const innerWidth = width - pad.left - pad.right;
+        const innerHeight = height - pad.top - pad.bottom;
+        const xFor = (index) => pad.left + (rows.length === 1 ? innerWidth / 2 : (index / (rows.length - 1)) * innerWidth);
+        const yFor = (value) => pad.top + innerHeight - (value / max) * innerHeight;
+        const points = rows.map((row, index) => `${xFor(index)},${yFor(row.value)}`).join(" ");
+        const area = rows.length
+          ? `${pad.left},${pad.top + innerHeight} ${points} ${xFor(rows.length - 1)},${pad.top + innerHeight}`
+          : "";
+
+        container.innerHTML = `<div class="svg-chart">
+          <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${emptyMessage}">
+            <line class="svg-axis" x1="${pad.left}" y1="${pad.top + innerHeight}" x2="${width - pad.right}" y2="${pad.top + innerHeight}"></line>
+            <line class="svg-axis" x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${pad.top + innerHeight}"></line>
+            ${mode === "area" ? `<polygon class="svg-area" points="${area}"></polygon>` : ""}
+            ${rows.length > 1 ? `<polyline class="svg-line" points="${points}"></polyline>` : ""}
+            ${rows
+              .map((row, index) => `<circle class="svg-point" cx="${xFor(index)}" cy="${yFor(row.value)}" r="5"></circle>`)
+              .join("")}
+            ${rows
+              .map((row, index) => {
+                if (rows.length > 8 && index % 2 !== 0 && index !== rows.length - 1) return "";
+                return `<text class="svg-label" x="${xFor(index)}" y="${height - 14}" text-anchor="middle">${escapeHtml(row.label)}</text>`;
+              })
+              .join("")}
+          </svg>
+        </div>`;
+      }
+
+      function renderPieChart(containerId, rows, emptyMessage) {
+        const container = document.getElementById(containerId);
+        if (!rows.length) {
+          container.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+          return;
+        }
+
+        const colors = chartColors();
+        const total = rows.reduce((sum, row) => sum + row.value, 0);
+        let cursor = 0;
+        const segments = rows.map((row, index) => {
+          const start = cursor;
+          const end = cursor + (row.value / total) * 100;
+          cursor = end;
+          return `${colors[index % colors.length]} ${start}% ${end}%`;
+        });
+
+        container.innerHTML = `<div class="pie-layout">
+          <div class="pie-chart" style="background: conic-gradient(${segments.join(", ")})"></div>
+          <div class="legend">${rows
+            .map((row, index) => {
+              const percent = total ? (row.value / total) * 100 : 0;
+              return `<div class="legend-item">
+                <span class="legend-color" style="background:${colors[index % colors.length]}"></span>
+                <span class="legend-name" title="${escapeHtml(row.label)}">${escapeHtml(row.label)}</span>
+                <strong>${percent.toFixed(1)}%</strong>
+              </div>`;
+            })
+            .join("")}</div>
+        </div>`;
+      }
+
+      function renderHeatmap(containerId, rows, emptyMessage) {
+        const container = document.getElementById(containerId);
+        if (!rows.length) {
+          container.innerHTML = `<div class="empty">${emptyMessage}</div>`;
+          return;
+        }
+
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        container.innerHTML = `<div class="heatmap">${rows
+          .map((row) => {
+            const alpha = row.value > 0 ? 0.16 + (row.value / max) * 0.72 : 0.06;
+            return `<div class="heat-cell" style="background:rgba(244, 123, 24, ${alpha})">
+              <strong>${escapeHtml(row.label)}</strong>
+              <span>${qty(row.value)}</span>
+            </div>`;
+          })
+          .join("")}</div>`;
+      }
+
+      function renderDashboardCharts() {
+        const sales = acceptedSales();
+        const byDay = new Map();
+        const byMonth = new Map();
+        const byProduct = new Map();
+        const bySalesCategory = new Map();
+        const byWeekday = new Map();
+        const stock = stockGeneral();
+        const weekdays = [
+          { key: 1, label: "Lun" },
+          { key: 2, label: "Mar" },
+          { key: 3, label: "Mié" },
+          { key: 4, label: "Jue" },
+          { key: 5, label: "Vie" },
+          { key: 6, label: "Sáb" },
+          { key: 0, label: "Dom" }
+        ];
+
+        weekdays.forEach((day) => byWeekday.set(day.key, 0));
+
+        sales.forEach((sale) => {
+          const amount = Number(sale.cantidad || 0);
+          if (!sale.fecha || amount <= 0) return;
+          const product = findProduct(sale.codigo_producto);
+          addToMap(byDay, sale.fecha, amount);
+          addToMap(byMonth, sale.fecha.slice(0, 7), amount);
+          addToMap(byProduct, sale.codigo_producto, amount);
+          addToMap(bySalesCategory, knownCategory(product ? product.categoria : "Otros"), amount);
+          addToMap(byWeekday, new Date(`${sale.fecha}T00:00:00`).getDay(), amount);
+        });
+
+        const salesByDay = [...byDay.entries()]
+          .sort(([a], [b]) => a.localeCompare(b))
+          .slice(-10)
+          .map(([label, value]) => ({ label, value }));
+
+        const salesByMonth = [...byMonth.entries()]
+          .sort(([a], [b]) => a.localeCompare(b))
+          .slice(-12)
+          .map(([key, value]) => ({ label: monthLabel(key), value }));
+
+        let cumulative = 0;
+        const cumulativeSales = salesByMonth.map((row) => {
+          cumulative += row.value;
+          return { label: row.label, value: cumulative };
+        });
+
+        const topProducts = [...byProduct.entries()]
+          .map(([code, value]) => ({ label: productName(code), value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 8);
+
+        const salesByCategory = [...bySalesCategory.entries()]
+          .map(([label, value]) => ({ label, value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 6);
+
+        const weeklyPattern = weekdays.map((day) => ({ label: day.label, value: Number(byWeekday.get(day.key) || 0) }));
+
+        const lowStock = data.productos
+          .map((product) => ({
+            Código: product.codigo,
+            Producto: product.nombre,
+            Categoría: knownCategory(product.categoria),
+            Stock: Number(stock[product.codigo] || 0),
+            Estado: Number(stock[product.codigo] || 0) <= 0 ? "Agotado" : "Bajo"
+          }))
+          .sort((a, b) => a.Stock - b.Stock)
+          .slice(0, 8);
+
+        renderVerticalBars("chartSalesByDay", salesByDay, "Aún no hay ventas registradas.");
+        renderLineAreaChart("chartMonthlyLine", salesByMonth, "Aún no hay ventas para ver evolución.", "line");
+        renderPieChart("chartCategoryPie", salesByCategory, "Aún no hay ventas por categoría.");
+        renderHorizontalBars("chartTopProducts", topProducts, "Aún no hay productos vendidos.");
+        renderHeatmap("chartWeekHeatmap", weeklyPattern, "Aún no hay ventas para detectar patrones.");
+        renderLineAreaChart("chartCumulativeArea", cumulativeSales, "Aún no hay ventas acumuladas.", "area");
+        document.getElementById("chartLowStockTable").innerHTML = tableFromRows(lowStock, ["Código", "Producto", "Categoría", "Stock", "Estado"], {
+          Stock: qty,
+          Estado: (value) => `<span class="status ${value === "Agotado" ? "bad" : "warn"}">${value}</span>`
+        });
+      }
+
+      function renderProducts() {
+        const stock = stockGeneral();
+        const query = document.getElementById("productSearch").value.trim().toLowerCase();
+        const rows = data.productos.filter((p) => `${p.codigo} ${p.nombre} ${p.categoria}`.toLowerCase().includes(query));
+        document.getElementById("productsTable").innerHTML = rows.length
+          ? rows
+              .map((p) => {
+                const currentStock = Number(stock[p.codigo] || 0);
+                const badge = currentStock > 0 ? "ok" : "warn";
+                return `<tr>
+                  <td>${p.codigo}</td>
+                  <td>${p.nombre}</td>
+                  <td>${p.categoria}</td>
+                  <td>${p.unidad}</td>
+                  <td>${qty(p.stock_inicial)}</td>
+                  <td><span class="status ${badge}">${qty(currentStock)}</span></td>
+                  <td>${money(p.precio_referencia)}</td>
+                  <td>
+                    <button class="btn secondary small" data-edit-product="${p.codigo}">Editar</button>
+                    <button class="btn danger small" data-delete-product="${p.codigo}">Eliminar</button>
+                  </td>
+                </tr>`;
+              })
+              .join("")
+          : `<tr><td colspan="8" class="empty">No se encontraron productos.</td></tr>`;
+      }
+
+      function renderProductOptions() {
+        const options = data.productos
+          .map((p) => `<option value="${p.codigo}">${p.codigo} - ${p.nombre}</option>`)
+          .join("");
+        document.getElementById("entryProduct").innerHTML = options;
+        document.getElementById("outputProduct").innerHTML = options;
+        updateStockHint();
+      }
+
+      function renderEntries() {
+        const rows = [...data.entradas].sort((a, b) => `${a.fecha}-${a.id}`.localeCompare(`${b.fecha}-${b.id}`));
+        document.getElementById("entriesTable").innerHTML = rows.length
+          ? rows
+              .map(
+                (e) => `<tr>
+                  <td>${e.id}</td>
+                  <td>${e.fecha}</td>
+                  <td>${e.codigo_producto}</td>
+                  <td>${productName(e.codigo_producto)}</td>
+                  <td>${qty(e.cantidad)}</td>
+                  <td>${money(e.precio_unitario)}</td>
+                  <td>${money(Number(e.cantidad) * Number(e.precio_unitario))}</td>
+                  <td>${e.lote}</td>
+                </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="8" class="empty">No hay compras registradas.</td></tr>`;
+      }
+
+      function renderOutputs() {
+        const rows = [...data.salidas].sort((a, b) => `${a.fecha}-${a.id}`.localeCompare(`${b.fecha}-${b.id}`));
+        document.getElementById("outputsTable").innerHTML = rows.length
+          ? rows
+              .map(
+                (s) => `<tr>
+                  <td>${s.id}</td>
+                  <td>${s.fecha}</td>
+                  <td>${s.codigo_producto}</td>
+                  <td>${productName(s.codigo_producto)}</td>
+                  <td>${qty(s.cantidad)}</td>
+                  <td><span class="status info">${s.estado || "Atendido"}</span></td>
+                  <td>${s.observacion || "Venta"}</td>
+                </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="7" class="empty">No hay ventas registradas.</td></tr>`;
+      }
+
+      function comparisonRows(fifo, lifo) {
+        return [
+          {
+            Concepto: "Costo de productos vendidos",
+            FIFO: money(fifo.costo_ventas_total),
+            LIFO: money(lifo.costo_ventas_total),
+            Diferencia: money(Math.abs(fifo.costo_ventas_total - lifo.costo_ventas_total))
+          },
+          {
+            Concepto: "Valor actual del stock",
+            FIFO: money(fifo.valor_total_inventario),
+            LIFO: money(lifo.valor_total_inventario),
+            Diferencia: money(Math.abs(fifo.valor_total_inventario - lifo.valor_total_inventario))
+          },
+          {
+            Concepto: "Movimientos registrados",
+            FIFO: fifo.kardex.length,
+            LIFO: lifo.kardex.length,
+            Diferencia: Math.abs(fifo.kardex.length - lifo.kardex.length)
+          }
+        ];
+      }
+
+      function tableFromRows(rows, columns, formatters = {}) {
+        if (!rows.length) return `<div class="empty">No hay registros para mostrar.</div>`;
+        return `<div class="table-wrap"><table><thead><tr>${columns.map((c) => `<th>${c}</th>`).join("")}</tr></thead><tbody>${rows
+          .map((row) => `<tr>${columns.map((c) => `<td>${formatters[c] ? formatters[c](row[c], row) : row[c]}</td>`).join("")}</tr>`)
+          .join("")}</tbody></table></div>`;
+      }
+
+      function renderReport() {
+        const container = document.getElementById("reportContent");
+        if (!container) return;
+        const stock = stockGeneral();
+        const fifo = calculateKardex("FIFO");
+        const lifo = calculateKardex("LIFO");
+
+        if (activeReport === "inventory") {
+          const rows = data.productos.map((p) => ({
+            Código: p.codigo,
+            Producto: p.nombre,
+            Categoría: p.categoria,
+            Unidad: p.unidad,
+            Stock: Number(stock[p.codigo] || 0)
+          }));
+          container.innerHTML = tableFromRows(rows, ["Código", "Producto", "Categoría", "Unidad", "Stock"], { Stock: qty });
+        }
+
+        if (activeReport === "fifo" || activeReport === "lifo") {
+          const result = activeReport === "fifo" ? fifo : lifo;
+          const movementRows = result.kardex.map((row) => ({
+            Fecha: row.Fecha,
+            Movimiento: row.Movimiento,
+            Tipo: row.Tipo,
+            Código: row.Código,
+            "Compra usada": row["Lote usado"],
+            "Cantidad comprada": row["Entrada cant."],
+            "Cantidad vendida": row["Salida cant."],
+            "Precio usado": row["Salida P.U."] || row["Entrada P.U."],
+            "Costo de salida": row["Costo venta"],
+            "Stock restante": row["Saldo cant."],
+            "Valor restante": row["Saldo valor"]
+          }));
+          const totals = `<div class="grid three-cols" style="margin-bottom:12px">
+            <div class="card metric"><span>Costo de productos vendidos</span><strong>${money(result.costo_ventas_total)}</strong></div>
+            <div class="card metric"><span>Valor actual del stock</span><strong>${money(result.valor_total_inventario)}</strong></div>
+            <div class="card metric"><span>Unidades sin stock</span><strong>${qty(result.faltantes_total)}</strong></div>
+          </div>`;
+          container.innerHTML =
+            totals +
+            tableFromRows(
+              movementRows,
+              ["Fecha", "Movimiento", "Tipo", "Código", "Compra usada", "Cantidad comprada", "Cantidad vendida", "Precio usado", "Costo de salida", "Stock restante", "Valor restante"],
+              {
+                "Cantidad comprada": qty,
+                "Cantidad vendida": qty,
+                "Precio usado": money,
+                "Costo de salida": money,
+                "Stock restante": qty,
+                "Valor restante": money
+              }
+            );
+        }
+
+        if (activeReport === "compare") {
+          container.innerHTML = tableFromRows(comparisonRows(fifo, lifo), ["Concepto", "FIFO", "LIFO", "Diferencia"]);
+        }
+
+        if (activeReport === "history") {
+          container.innerHTML = tableFromRows([...data.historial].reverse(), ["fecha_hora", "accion", "detalle"]);
+        }
+      }
+
+      function updateStockHint() {
+        const select = document.getElementById("outputProduct");
+        const product = findProduct(select.value);
+        const stock = stockGeneral()[select.value] || 0;
+        document.getElementById("stockHint").textContent = product
+          ? `Stock disponible: ${qty(stock)} ${product.unidad}`
+          : "No hay productos registrados.";
+      }
+
+      function resetProductForm() {
+        document.getElementById("productForm").reset();
+        document.getElementById("productEditing").value = "";
+        document.getElementById("productFormTitle").textContent = "Registrar producto";
+        document.getElementById("productFormHint").textContent = "El código puede quedar vacío para generarlo automáticamente.";
+        document.getElementById("productCode").disabled = false;
+        document.getElementById("productInitialStock").value = 0;
+      }
+
+      function downloadFile(name, content, type) {
+        const blob = new Blob([content], { type });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = name;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(link.href);
+      }
+
+      function toCsv(rows) {
+        if (!rows.length) return "";
+        const columns = Object.keys(rows[0]);
+        const escape = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+        return [columns.join(","), ...rows.map((row) => columns.map((col) => escape(row[col])).join(","))].join("\n");
+      }
+
+      function loadMandatoryCase() {
+        if (!confirm("Esto reemplazará los datos actuales por el caso obligatorio. ¿Continuar?")) return;
+        data = {
+          productos: [{ codigo: "P001", nombre: "Arroz extra", categoria: "Abarrotes", unidad: "kg", stock_inicial: 0, precio_referencia: 3 }],
+          entradas: [
+            { id: "E0001", fecha: "2026-07-01", codigo_producto: "P001", cantidad: 10, precio_unitario: 3, lote: "L-P001-001", observacion: "Caso de prueba" },
+            { id: "E0002", fecha: "2026-07-02", codigo_producto: "P001", cantidad: 10, precio_unitario: 4, lote: "L-P001-002", observacion: "Caso de prueba" },
+            { id: "E0003", fecha: "2026-07-03", codigo_producto: "P001", cantidad: 10, precio_unitario: 5, lote: "L-P001-003", observacion: "Caso de prueba" }
+          ],
+          salidas: [{ id: "S0001", fecha: "2026-07-04", codigo_producto: "P001", cantidad: 15, estado: "Atendido", observacion: "Caso de prueba" }],
+          historial: [{ fecha_hora: nowText(), accion: "Caso obligatorio cargado", detalle: "Caso FIFO S/ 50.00 y LIFO S/ 70.00" }],
+          metadatos: { nombre_sistema: "La tiendita de Don Pepe", creado: nowText(), descripcion: "Caso de prueba obligatorio" }
+        };
+        saveData();
+        renderAll();
+        switchView("dashboard");
+        notify("Caso cargado. Resultado esperado: primeras compras FIFO S/ 50.00 y últimas compras LIFO S/ 70.00.");
+      }
+
+      function generateTestEntries() {
+        if (!data.productos.length) {
+          notify("No hay productos registrados.");
+          return;
+        }
+        let created = 0;
+        const existing = new Set(data.entradas.map((e) => `${e.codigo_producto}|${e.lote}`));
+        data.productos.forEach((p) => {
+          const base = Number(p.precio_referencia || 10);
+          [50, 60, 70].forEach((amount, index) => {
+            const lot = `L-${p.codigo}-${String(index + 1).padStart(3, "0")}`;
+            if (existing.has(`${p.codigo}|${lot}`)) return;
+            data.entradas.push({
+              id: nextId("entrada"),
+              fecha: ["2026-01-01", "2026-02-01", "2026-03-01"][index],
+              codigo_producto: p.codigo,
+              cantidad: amount,
+              precio_unitario: Number((base * [0.75, 0.82, 0.9][index]).toFixed(2)),
+              lote: lot,
+              observacion: "Entrada de prueba generada automáticamente"
+            });
+            created += 1;
+          });
+        });
+        addHistory("Compras de prueba", `Se generaron ${created} lotes de compra`);
+        saveData();
+        renderAll();
+        notify(`Compras de prueba generadas: ${created}.`);
+      }
+
+      document.querySelectorAll(".nav-btn[data-view]").forEach((btn) => {
+        btn.addEventListener("click", () => switchView(btn.dataset.view));
+      });
+
+      document.querySelectorAll("[data-view-link]").forEach((btn) => {
+        btn.addEventListener("click", () => switchView(btn.dataset.viewLink));
+      });
+
+      document.querySelector("[data-action='test-case']").addEventListener("click", loadMandatoryCase);
+
+      document.getElementById("productSearch").addEventListener("input", renderProducts);
+
+      document.getElementById("productForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const editing = document.getElementById("productEditing").value;
+        const code = (document.getElementById("productCode").value.trim() || nextId("producto")).toUpperCase();
+        const name = document.getElementById("productName").value.trim();
+        const category = document.getElementById("productCategory").value.trim();
+        const unit = document.getElementById("productUnit").value.trim();
+        const initialStock = Number(document.getElementById("productInitialStock").value);
+        const price = Number(document.getElementById("productPrice").value);
+
+        if (!name || !category || !unit || initialStock < 0 || price < 0) {
+          notify("Completa los datos del producto.");
+          return;
+        }
+
+        if (!editing && findProduct(code)) {
+          notify("Ya existe un producto con ese código.");
+          return;
+        }
+
+        if (editing) {
+          const product = findProduct(editing);
+          product.nombre = name;
+          product.categoria = category;
+          product.unidad = unit;
+          product.stock_inicial = initialStock;
+          product.precio_referencia = price;
+          addHistory("Producto editado", `${product.codigo} - ${product.nombre}`);
+          notify("Producto actualizado correctamente.");
+        } else {
+          data.productos.push({ codigo: code, nombre: name, categoria: category, unidad: unit, stock_inicial: initialStock, precio_referencia: price });
+          addHistory("Producto registrado", `${code} - ${name} | Stock inicial: ${qty(initialStock)}`);
+          notify("Producto registrado correctamente.");
+        }
+
+        saveData();
+        resetProductForm();
+        renderAll();
+      });
+
+      document.getElementById("cancelProductEdit").addEventListener("click", resetProductForm);
+
+      document.getElementById("productsTable").addEventListener("click", (event) => {
+        const editCode = event.target.dataset.editProduct;
+        const deleteCode = event.target.dataset.deleteProduct;
+
+        if (editCode) {
+          const product = findProduct(editCode);
+          document.getElementById("productEditing").value = product.codigo;
+          document.getElementById("productCode").value = product.codigo;
+          document.getElementById("productCode").disabled = true;
+          document.getElementById("productName").value = product.nombre;
+          document.getElementById("productCategory").value = product.categoria;
+          document.getElementById("productUnit").value = product.unidad;
+          document.getElementById("productInitialStock").value = product.stock_inicial || 0;
+          document.getElementById("productPrice").value = product.precio_referencia;
+          document.getElementById("productFormTitle").textContent = "Editar producto";
+          document.getElementById("productFormHint").textContent = "El código se mantiene para conservar los movimientos.";
+        }
+
+        if (deleteCode) {
+          const hasMoves = data.entradas.some((e) => e.codigo_producto === deleteCode) || data.salidas.some((s) => s.codigo_producto === deleteCode);
+          if (hasMoves) {
+            notify("No se puede eliminar un producto con movimientos registrados.");
+            return;
+          }
+          const product = findProduct(deleteCode);
+          if (!confirm(`¿Eliminar ${product.nombre}?`)) return;
+          data.productos = data.productos.filter((p) => p.codigo !== deleteCode);
+          addHistory("Producto eliminado", `${deleteCode} - ${product.nombre}`);
+          saveData();
+          renderAll();
+          notify("Producto eliminado.");
+        }
+      });
+
+      document.getElementById("entryForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const code = document.getElementById("entryProduct").value;
+        const amount = Number(document.getElementById("entryQty").value);
+        const price = Number(document.getElementById("entryPrice").value);
+        if (!findProduct(code) || amount <= 0 || price <= 0) {
+          notify("Completa una compra válida.");
+          return;
+        }
+        const entry = {
+          id: nextId("entrada"),
+          fecha: document.getElementById("entryDate").value,
+          codigo_producto: code,
+          cantidad: amount,
+          precio_unitario: price,
+          lote: nextLot(code),
+          observacion: "Compra registrada desde interfaz web"
+        };
+        data.entradas.push(entry);
+        addHistory("Compra registrada", `${entry.id} | ${code} | ${qty(amount)} unidades | ${money(price)}`);
+        saveData();
+        event.target.reset();
+        document.getElementById("entryDate").value = today();
+        renderAll();
+        notify(`Compra registrada. Lote generado: ${entry.lote}.`);
+      });
+
+      document.getElementById("generateEntriesBtn").addEventListener("click", generateTestEntries);
+
+      document.getElementById("outputProduct").addEventListener("change", updateStockHint);
+
+      document.getElementById("outputForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const code = document.getElementById("outputProduct").value;
+        const amount = Number(document.getElementById("outputQty").value);
+        const stock = Number(stockGeneral()[code] || 0);
+        if (!findProduct(code) || amount <= 0) {
+          notify("Completa una venta válida.");
+          return;
+        }
+        if (amount > stock) {
+          notify("No hay stock suficiente para registrar la venta.");
+          return;
+        }
+        const output = {
+          id: nextId("salida"),
+          fecha: document.getElementById("outputDate").value,
+          codigo_producto: code,
+          cantidad: amount,
+          estado: "Atendido",
+          observacion: "Venta registrada desde interfaz web"
+        };
+        data.salidas.push(output);
+        addHistory("Venta registrada", `${output.id} | ${code} | ${qty(amount)} unidades`);
+        saveData();
+        event.target.reset();
+        document.getElementById("outputDate").value = today();
+        renderAll();
+        notify("Venta registrada correctamente.");
+      });
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          activeReport = tab.dataset.report;
+          document.querySelectorAll(".tab").forEach((el) => el.classList.toggle("active", el === tab));
+          renderReport();
+        });
+      });
+
+      document.getElementById("exportCsvBtn").addEventListener("click", () => {
+        const fifo = calculateKardex("FIFO");
+        const lifo = calculateKardex("LIFO");
+        const files = {
+          inventory: data.productos.map((p) => ({ ...p, stock: stockGeneral()[p.codigo] || 0 })),
+          fifo: fifo.kardex,
+          lifo: lifo.kardex,
+          compare: comparisonRows(fifo, lifo),
+          history: data.historial
+        };
+        downloadFile(`reporte_${activeReport}.csv`, toCsv(files[activeReport]), "text/csv;charset=utf-8");
+        notify("Reporte descargado.");
+      });
+
+      document.getElementById("syncJsonBtn").addEventListener("click", () => {
+        syncFromProjectJson();
+      });
+
+      document.getElementById("backupBtn").addEventListener("click", () => {
+        downloadFile(`backup_inventario_${today()}.json`, JSON.stringify(data, null, 2), "application/json");
+        notify("Copia JSON descargada.");
+      });
+
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        if (!confirm("¿Restablecer la interfaz con los productos base?")) return;
+        localStorage.removeItem(STORAGE_KEY);
+        data = clone(initialData);
+        saveData();
+        renderAll();
+        switchView("dashboard");
+        notify("Datos restablecidos.");
+      });
+
+      document.getElementById("entryDate").value = today();
+      document.getElementById("outputDate").value = today();
+      renderAll();
+      syncFromProjectJson({ auto: true });
+    </script>
+  </body>
+</html>
