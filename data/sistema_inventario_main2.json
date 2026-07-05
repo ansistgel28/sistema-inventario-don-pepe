@@ -1,0 +1,833 @@
+{
+    "productos": [
+        {
+            "codigo": "P001",
+            "nombre": "Arroz superior 5kg",
+            "categoria": "Abarrotes",
+            "unidad": "bolsa 5 kg",
+            "stock_inicial": 50,
+            "precio_referencia": 17.16
+        },
+        {
+            "codigo": "P002",
+            "nombre": "Chocolate en barra 100g",
+            "categoria": "Abarrotes",
+            "unidad": "kg",
+            "stock_inicial": 195,
+            "precio_referencia": 19.34
+        },
+        {
+            "codigo": "P003",
+            "nombre": "Chocolate en barra 100g",
+            "categoria": "Abarrotes",
+            "unidad": "botella",
+            "stock_inicial": 20,
+            "precio_referencia": 11.75
+        },
+        {
+            "codigo": "P004",
+            "nombre": "Harina sin preparar 1kg",
+            "categoria": "Abarrotes",
+            "unidad": "paquete",
+            "stock_inicial": 19,
+            "precio_referencia": 9.99
+        },
+        {
+            "codigo": "P005",
+            "nombre": "Fideos spaghetti 500g",
+            "categoria": "Abarrotes",
+            "unidad": "kg",
+            "stock_inicial": 134,
+            "precio_referencia": 4.88
+        },
+        {
+            "codigo": "P006",
+            "nombre": "Té verde 25 sobres",
+            "categoria": "Abarrotes",
+            "unidad": "paquete",
+            "stock_inicial": 165,
+            "precio_referencia": 12.88
+        },
+        {
+            "codigo": "P007",
+            "nombre": "Chocolate en barra 100g",
+            "categoria": "Abarrotes",
+            "unidad": "paquete",
+            "stock_inicial": 107,
+            "precio_referencia": 2.07
+        },
+        {
+            "codigo": "P008",
+            "nombre": "Sal yodada 1kg",
+            "categoria": "Abarrotes",
+            "unidad": "kg",
+            "stock_inicial": 136,
+            "precio_referencia": 8.19
+        },
+        {
+            "codigo": "P009",
+            "nombre": "Leche deslactosada 1L",
+            "categoria": "Lácteos",
+            "unidad": "lata",
+            "stock_inicial": 169,
+            "precio_referencia": 5.39
+        },
+        {
+            "codigo": "P010",
+            "nombre": "Producto genérico",
+            "categoria": "Lácteos y huevos",
+            "unidad": "docena",
+            "stock_inicial": 118,
+            "precio_referencia": 5.78
+        },
+        {
+            "codigo": "P011",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "kg",
+            "stock_inicial": 145,
+            "precio_referencia": 15.26
+        },
+        {
+            "codigo": "P012",
+            "nombre": "Sardina en aceite 170g",
+            "categoria": "Conservas",
+            "unidad": "lata",
+            "stock_inicial": 81,
+            "precio_referencia": 17.35
+        },
+        {
+            "codigo": "P013",
+            "nombre": "Durazno en almíbar 420g",
+            "categoria": "Conservas",
+            "unidad": "lata",
+            "stock_inicial": 11,
+            "precio_referencia": 9.71
+        },
+        {
+            "codigo": "P014",
+            "nombre": "Producto genérico",
+            "categoria": "Tubérculos",
+            "unidad": "kg",
+            "stock_inicial": 131,
+            "precio_referencia": 11.71
+        },
+        {
+            "codigo": "P015",
+            "nombre": "Papa blanca 1kg",
+            "categoria": "Verduras",
+            "unidad": "kg",
+            "stock_inicial": 21,
+            "precio_referencia": 5.09
+        },
+        {
+            "codigo": "P016",
+            "nombre": "Naranja jugo 1kg",
+            "categoria": "Frutas",
+            "unidad": "kg",
+            "stock_inicial": 53,
+            "precio_referencia": 9.77
+        },
+        {
+            "codigo": "P017",
+            "nombre": "Producto genérico",
+            "categoria": "Panadería",
+            "unidad": "unidad",
+            "stock_inicial": 110,
+            "precio_referencia": 4.5
+        },
+        {
+            "codigo": "P018",
+            "nombre": "Detergente en polvo 500g",
+            "categoria": "Limpieza",
+            "unidad": "bolsa",
+            "stock_inicial": 5,
+            "precio_referencia": 20.84
+        },
+        {
+            "codigo": "P019",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 94,
+            "precio_referencia": 3.12
+        },
+        {
+            "codigo": "P020",
+            "nombre": "Papel higiénico pack x4",
+            "categoria": "Limpieza",
+            "unidad": "pack",
+            "stock_inicial": 127,
+            "precio_referencia": 13.93
+        },
+        {
+            "codigo": "P021",
+            "nombre": "Producto genérico",
+            "categoria": "Otros",
+            "unidad": "ml",
+            "stock_inicial": 48,
+            "precio_referencia": 8.82
+        },
+        {
+            "codigo": "P022",
+            "nombre": "Producto genérico",
+            "categoria": "CHELA",
+            "unidad": "ml",
+            "stock_inicial": 93,
+            "precio_referencia": 8.88
+        },
+        {
+            "codigo": "P023",
+            "nombre": "Producto genérico",
+            "categoria": "Lit",
+            "unidad": "ml",
+            "stock_inicial": 138,
+            "precio_referencia": 23.58
+        },
+        {
+            "codigo": "P024",
+            "nombre": "Pollo entero fresco 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 188,
+            "precio_referencia": 21.02
+        },
+        {
+            "codigo": "P025",
+            "nombre": "Arveja verde 500g",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 113,
+            "precio_referencia": 17.19
+        },
+        {
+            "codigo": "P026",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 184,
+            "precio_referencia": 14.3
+        },
+        {
+            "codigo": "P027",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 67,
+            "precio_referencia": 20.43
+        },
+        {
+            "codigo": "P028",
+            "nombre": "Jurel en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 119,
+            "precio_referencia": 6.94
+        },
+        {
+            "codigo": "P029",
+            "nombre": "Avena integral 400g",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 138,
+            "precio_referencia": 14.29
+        },
+        {
+            "codigo": "P030",
+            "nombre": "Leche deslactosada 1L",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 154,
+            "precio_referencia": 6.11
+        },
+        {
+            "codigo": "P031",
+            "nombre": "Pollo entero fresco 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 153,
+            "precio_referencia": 4.53
+        },
+        {
+            "codigo": "P032",
+            "nombre": "Papa blanca 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 93,
+            "precio_referencia": 18.96
+        },
+        {
+            "codigo": "P033",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 106,
+            "precio_referencia": 11.84
+        },
+        {
+            "codigo": "P034",
+            "nombre": "Jabón líquido 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 154,
+            "precio_referencia": 2.97
+        },
+        {
+            "codigo": "P035",
+            "nombre": "Atún en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 169,
+            "precio_referencia": 20.96
+        },
+        {
+            "codigo": "P036",
+            "nombre": "Café instantáneo 200g",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 80,
+            "precio_referencia": 4.95
+        },
+        {
+            "codigo": "P037",
+            "nombre": "Mantequilla 200g",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 43,
+            "precio_referencia": 22.82
+        },
+        {
+            "codigo": "P038",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 69,
+            "precio_referencia": 2.09
+        },
+        {
+            "codigo": "P039",
+            "nombre": "Zanahoria 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 80,
+            "precio_referencia": 6.99
+        },
+        {
+            "codigo": "P040",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 100,
+            "precio_referencia": 5.03
+        },
+        {
+            "codigo": "P041",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 77,
+            "precio_referencia": 12.06
+        },
+        {
+            "codigo": "P042",
+            "nombre": "Sardina en aceite 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 28,
+            "precio_referencia": 22.29
+        },
+        {
+            "codigo": "P043",
+            "nombre": "Aceite vegetal 1L",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 20,
+            "precio_referencia": 11.48
+        },
+        {
+            "codigo": "P044",
+            "nombre": "Queso fresco 1kg",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 151,
+            "precio_referencia": 16.64
+        },
+        {
+            "codigo": "P045",
+            "nombre": "Pollo entero fresco 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 131,
+            "precio_referencia": 10.82
+        },
+        {
+            "codigo": "P046",
+            "nombre": "Zanahoria 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 83,
+            "precio_referencia": 17.29
+        },
+        {
+            "codigo": "P047",
+            "nombre": "Manzana roja 1kg",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 156,
+            "precio_referencia": 11.05
+        },
+        {
+            "codigo": "P048",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 122,
+            "precio_referencia": 2.49
+        },
+        {
+            "codigo": "P049",
+            "nombre": "Sardina en aceite 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 47,
+            "precio_referencia": 15.16
+        },
+        {
+            "codigo": "P050",
+            "nombre": "Arroz superior 5kg",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 148,
+            "precio_referencia": 6.7
+        },
+        {
+            "codigo": "P051",
+            "nombre": "Queso fresco 1kg",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 199,
+            "precio_referencia": 18.55
+        },
+        {
+            "codigo": "P052",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 151,
+            "precio_referencia": 15.21
+        },
+        {
+            "codigo": "P053",
+            "nombre": "Cebolla roja 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 80,
+            "precio_referencia": 20.54
+        },
+        {
+            "codigo": "P054",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 164,
+            "precio_referencia": 21.73
+        },
+        {
+            "codigo": "P055",
+            "nombre": "Jabón líquido 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 9,
+            "precio_referencia": 12.91
+        },
+        {
+            "codigo": "P056",
+            "nombre": "Atún en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 29,
+            "precio_referencia": 13.07
+        },
+        {
+            "codigo": "P057",
+            "nombre": "Arroz superior 5kg",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 11,
+            "precio_referencia": 18.66
+        },
+        {
+            "codigo": "P058",
+            "nombre": "Yogurt natural 1L",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 119,
+            "precio_referencia": 24.65
+        },
+        {
+            "codigo": "P059",
+            "nombre": "Pollo entero fresco 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 44,
+            "precio_referencia": 19.56
+        },
+        {
+            "codigo": "P060",
+            "nombre": "Tomate rosado 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 61,
+            "precio_referencia": 8.33
+        },
+        {
+            "codigo": "P061",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 71,
+            "precio_referencia": 24.58
+        },
+        {
+            "codigo": "P062",
+            "nombre": "Jabón líquido 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 193,
+            "precio_referencia": 22.73
+        },
+        {
+            "codigo": "P063",
+            "nombre": "Durazno en almíbar 420g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 120,
+            "precio_referencia": 2.73
+        },
+        {
+            "codigo": "P064",
+            "nombre": "Galletas soda 6 pack",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 24,
+            "precio_referencia": 11.38
+        },
+        {
+            "codigo": "P065",
+            "nombre": "Leche deslactosada 1L",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 94,
+            "precio_referencia": 15.3
+        },
+        {
+            "codigo": "P066",
+            "nombre": "Carne de cerdo 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 36,
+            "precio_referencia": 24.8
+        },
+        {
+            "codigo": "P067",
+            "nombre": "Tomate rosado 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 93,
+            "precio_referencia": 14.07
+        },
+        {
+            "codigo": "P068",
+            "nombre": "Papaya fresca 1kg",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 29,
+            "precio_referencia": 19.77
+        },
+        {
+            "codigo": "P069",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 43,
+            "precio_referencia": 21.5
+        },
+        {
+            "codigo": "P070",
+            "nombre": "Atún en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 111,
+            "precio_referencia": 9.31
+        },
+        {
+            "codigo": "P071",
+            "nombre": "Café instantáneo 200g",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 197,
+            "precio_referencia": 2.62
+        },
+        {
+            "codigo": "P072",
+            "nombre": "Yogurt natural 1L",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 90,
+            "precio_referencia": 3.64
+        },
+        {
+            "codigo": "P073",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 13,
+            "precio_referencia": 20.13
+        },
+        {
+            "codigo": "P074",
+            "nombre": "Tomate rosado 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 104,
+            "precio_referencia": 14.66
+        },
+        {
+            "codigo": "P075",
+            "nombre": "Plátano seda 1kg",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 164,
+            "precio_referencia": 11.0
+        },
+        {
+            "codigo": "P076",
+            "nombre": "Detergente en polvo 500g",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 197,
+            "precio_referencia": 20.55
+        },
+        {
+            "codigo": "P077",
+            "nombre": "Jurel en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 91,
+            "precio_referencia": 10.93
+        },
+        {
+            "codigo": "P078",
+            "nombre": "Mermelada de fresa 250g",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 168,
+            "precio_referencia": 2.7
+        },
+        {
+            "codigo": "P079",
+            "nombre": "Queso fresco 1kg",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 35,
+            "precio_referencia": 9.65
+        },
+        {
+            "codigo": "P080",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 37,
+            "precio_referencia": 13.69
+        },
+        {
+            "codigo": "P081",
+            "nombre": "Arveja verde 500g",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 137,
+            "precio_referencia": 14.7
+        },
+        {
+            "codigo": "P082",
+            "nombre": "Piña 1 unidad",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 53,
+            "precio_referencia": 10.97
+        },
+        {
+            "codigo": "P083",
+            "nombre": "Suavizante de ropa 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 158,
+            "precio_referencia": 17.84
+        },
+        {
+            "codigo": "P084",
+            "nombre": "Sardina en aceite 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 109,
+            "precio_referencia": 17.08
+        },
+        {
+            "codigo": "P085",
+            "nombre": "Avena integral 400g",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 63,
+            "precio_referencia": 14.26
+        },
+        {
+            "codigo": "P086",
+            "nombre": "Yogurt natural 1L",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 76,
+            "precio_referencia": 14.19
+        },
+        {
+            "codigo": "P087",
+            "nombre": "Carne de cerdo 1kg",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 78,
+            "precio_referencia": 4.59
+        },
+        {
+            "codigo": "P088",
+            "nombre": "Papa blanca 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 85,
+            "precio_referencia": 2.81
+        },
+        {
+            "codigo": "P089",
+            "nombre": "Plátano seda 1kg",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 187,
+            "precio_referencia": 11.66
+        },
+        {
+            "codigo": "P090",
+            "nombre": "Jabón líquido 1L",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 35,
+            "precio_referencia": 22.93
+        },
+        {
+            "codigo": "P091",
+            "nombre": "Jurel en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 142,
+            "precio_referencia": 21.66
+        },
+        {
+            "codigo": "P092",
+            "nombre": "Té verde 25 sobres",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 65,
+            "precio_referencia": 10.36
+        },
+        {
+            "codigo": "P093",
+            "nombre": "Queso fresco 1kg",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 17,
+            "precio_referencia": 5.54
+        },
+        {
+            "codigo": "P094",
+            "nombre": "Hígado de res 500g",
+            "categoria": "Carnes",
+            "unidad": "unidad",
+            "stock_inicial": 79,
+            "precio_referencia": 9.47
+        },
+        {
+            "codigo": "P095",
+            "nombre": "Cebolla roja 1kg",
+            "categoria": "Verduras",
+            "unidad": "unidad",
+            "stock_inicial": 198,
+            "precio_referencia": 24.07
+        },
+        {
+            "codigo": "P096",
+            "nombre": "Papaya fresca 1kg",
+            "categoria": "Frutas",
+            "unidad": "unidad",
+            "stock_inicial": 169,
+            "precio_referencia": 24.12
+        },
+        {
+            "codigo": "P097",
+            "nombre": "Detergente en polvo 500g",
+            "categoria": "Limpieza",
+            "unidad": "unidad",
+            "stock_inicial": 197,
+            "precio_referencia": 3.48
+        },
+        {
+            "codigo": "P098",
+            "nombre": "Atún en lata 170g",
+            "categoria": "Conservas",
+            "unidad": "unidad",
+            "stock_inicial": 138,
+            "precio_referencia": 10.45
+        },
+        {
+            "codigo": "P099",
+            "nombre": "Aceite vegetal 1L",
+            "categoria": "Abarrotes",
+            "unidad": "unidad",
+            "stock_inicial": 109,
+            "precio_referencia": 4.08
+        },
+        {
+            "codigo": "P100",
+            "nombre": "Mantequilla 200g",
+            "categoria": "Lácteos",
+            "unidad": "unidad",
+            "stock_inicial": 154,
+            "precio_referencia": 21.19
+        }
+    ],
+    "entradas": [],
+    "salidas": [],
+    "historial": [
+        {
+            "fecha_hora": "2026-07-04 19:01:44",
+            "accion": "Carga inicial",
+            "detalle": "Se importaron 20 productos desde base_datos_inventario.json"
+        },
+        {
+            "fecha_hora": "2026-07-04 20:56:24",
+            "accion": "Producto registrado",
+            "detalle": "P021 - Coca"
+        },
+        {
+            "fecha_hora": "2026-07-04 21:02:13",
+            "accion": "Producto registrado",
+            "detalle": "P022 - PILSEN | Stock inicial: 50"
+        },
+        {
+            "fecha_hora": "2026-07-04 21:16:30",
+            "accion": "Producto registrado",
+            "detalle": "P023 - Lit | Stock inicial: 10"
+        }
+    ],
+    "metadatos": {
+        "nombre_sistema": "Sistema de Inventarios FIFO y LIFO",
+        "creado": "2026-07-04 19:01:44",
+        "descripcion": "Base de datos JSON para proyecto de estructura de datos"
+    }
+}
