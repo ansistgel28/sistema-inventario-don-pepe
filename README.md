@@ -1,9 +1,10 @@
-# Sistema de Inventarios FIFO y LIFO - Consola
+# La tiendita de Don Pepe - Sistema de inventario
 
 Proyecto para el curso de Estructura de Datos.
 
 ## Objetivo
-Diseñar e implementar un sistema básico de control de inventarios que permita registrar productos, entradas, salidas y comparar los métodos FIFO y LIFO.
+
+Diseñar e implementar un sistema básico de control de inventarios que permita registrar productos, compras, ventas y comparar los métodos FIFO y LIFO.
 
 ## Archivos
 
@@ -11,18 +12,22 @@ Diseñar e implementar un sistema básico de control de inventarios que permita 
 sistema_inventario_consola_fifo_lifo/
 ├── main.py
 ├── README.md
+├── interfaz_web/
+│   ├── index.html
+│   └── assets/
+│       └── don-pepe.png
 └── data/
-    └── base_datos_inventario.json
+    ├── base_datos_inventario.json
+    └── sistema_inventario.json
 ```
 
-Cuando ejecutes el sistema se creará automáticamente:
+Cuando ejecutes el sistema por consola se creará automáticamente:
 
 ```text
-data/sistema_inventario.json
 reportes/
 ```
 
-## Ejecución
+## Ejecución por consola
 
 ```bash
 cd sistema_inventario_consola_fifo_lifo
@@ -31,16 +36,29 @@ python3 main.py
 
 No requiere instalar librerías externas.
 
+## Interfaz web
+
+Para probar la interfaz web con lectura del JSON del proyecto:
+
+```bash
+python3 -m http.server 8020
+```
+
+Luego abre:
+
+```text
+http://127.0.0.1:8020/interfaz_web/index.html
+```
+
 ## Menú principal
 
-1. Dashboard general
-2. Gestión de productos
-3. Entradas / compras
-4. Salidas / ventas
-5. Reportes FIFO y LIFO
+1. Inicio
+2. Productos
+3. Compras
+4. Ventas
+5. Reportes
 6. Cargar caso de prueba obligatorio
-7. Fundamento teórico y algoritmo
-8. Crear backup de la base JSON
+7. Crear backup de la base JSON
 0. Salir
 
 ## Caso de prueba obligatorio
