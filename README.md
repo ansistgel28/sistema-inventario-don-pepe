@@ -57,7 +57,7 @@ python3 -m http.server 8020
 Luego abrir en el navegador:
 
 ```text
-http://127.0.0.1:8020/interfaz_web/index.html
+http://127.0.0.1:8020/interfaz_web/index.html](https://ansistgel28.github.io/sistema-inventario-don-pepe/interfaz_web/
 ```
 
 ## Menú principal de consola
